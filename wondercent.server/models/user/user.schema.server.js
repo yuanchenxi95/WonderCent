@@ -9,7 +9,7 @@ module.exports = function () {
         email       : String,
         password    : String,
         _followingUsers  : [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
-        _followerUsers   : [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+        // _followerUsers   : [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
 
         jobRoles        : [JobRoleSchema],
 

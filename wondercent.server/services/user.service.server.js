@@ -14,10 +14,11 @@ module.exports = function (app, models) {
     app.post("/api/loggedin", loggedin);
     app.post("/api/register", register);
     app.post("/api/logout", authenticate, logout);
-    app.get("/api/profile", authenticate, findUserById);
-    app.put("/api/profile/Email", authenticate, updateUserEmail);
-    app.put("/api/profile/Password", authenticate, updateUserPassword);
-    app.delete("/api/profile", authenticate, deleteUser);
+    app.get("/api/user", authenticate, findUserById);
+    app.put("/api/user/Email", authenticate, updateUserEmail);
+    app.put("/api/user/Password", authenticate, updateUserPassword);
+    app.delete("/api/user", authenticate, deleteUser);
+    app.
 
 
     passport.use('wondercent', new LocalStrategy(localStrategy));
@@ -190,6 +191,6 @@ module.exports = function (app, models) {
                 }
             );
     }
-    
+
 };
 
