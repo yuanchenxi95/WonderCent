@@ -17,8 +17,8 @@ module.exports = function (app, models) {
     app.get("/api/user", authenticate, findUserById);
     app.put("/api/user/Email", authenticate, updateUserEmail);
     app.put("/api/user/Password", authenticate, updateUserPassword);
+    app.put("/api/user/following", authenticate, addFollowingUser());
     app.delete("/api/user", authenticate, deleteUser);
-    app.
 
 
     passport.use('wondercent', new LocalStrategy(localStrategy));
@@ -146,7 +146,7 @@ module.exports = function (app, models) {
     }
 
     function updateUserEmail(req, res) {
-        var user = req.body;
+        var user = req.user;
         var userId = user._id;
 
         userModel
@@ -162,7 +162,7 @@ module.exports = function (app, models) {
     }
 
     function updateUserPassword(req, res) {
-        var user = req.body;
+        var user = req.user;
         var userId = user._id;
 
         userModel
@@ -178,7 +178,8 @@ module.exports = function (app, models) {
     }
 
     function deleteUser(req, res) {
-        var userId = req.params.userId;
+        var user = req.user;
+        var userId = user._id;
 
         userModel
             .deleteUser(userId)
@@ -190,6 +191,26 @@ module.exports = function (app, models) {
                     res.status(404).send("Unable to remove the user: " + userId);
                 }
             );
+    }
+
+    // req.body should be the user ID which need to be added to the following list
+    function addFollowingUser(req, res) {
+        var user = req.user;
+        var userId = user._id;
+        var addingId = req.body;
+
+        userModel
+            .addFollowingUser(userId, addingId)
+            .then(
+                function (status) {
+                    res.sendStatus(200);
+                },
+                function (error) {
+                    res.status(404).send("Unable to follow the user");
+                }
+            )
+
+
     }
 
 };
