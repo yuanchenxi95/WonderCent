@@ -17,7 +17,7 @@ module.exports = function (app, models) {
     app.get("/api/user", authenticate, findUserById);
     app.put("/api/user/Email", authenticate, updateUserEmail);
     app.put("/api/user/Password", authenticate, updateUserPassword);
-    app.put("/api/user/following", authenticate, addFollowingUser());
+    app.put("/api/user/following", authenticate, addFollowingUser);
     app.delete("/api/user", authenticate, deleteUser);
 
 
