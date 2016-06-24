@@ -6,10 +6,12 @@ module.exports = function(app) {
 
     // load model
     var model = require("./models/model.js");
+    
+    
 
     // TODO load Service
     // e.g. var userService = require("./services/user.service.server.js")(app, model);
-
+    var userService = require("./services/user.service.server.js")(app, model);
 
     // test
   // app.get("/test/:message", function (req, res) {
