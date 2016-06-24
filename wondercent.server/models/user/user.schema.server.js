@@ -1,8 +1,8 @@
 module.exports = function () {
     var mongoose = require("mongoose");
 
-    var ProfileSchema = require("./profile.schema.service")();
-    var JobRoleSchema = require("./jobRole.schema.server")();
+    var ProfileSchema = require("../profile/profile.schema.server.js")();
+    var JobRoleSchema = require("../jobRole/jobRole.schema.server.js")();
 
     var UserSchema = mongoose.Schema({
         profile         : ProfileSchema,

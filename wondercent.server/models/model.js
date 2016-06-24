@@ -16,10 +16,10 @@ module.exports = function () {
 
     mongoose.connect(connectionString);
 
-    var profileModel = require('./profile/profile.model.server')();
-    var jobRoleModel = require('./jobRole/jobRole.model.server')();
     var jobModel = require('./job/job.model.server')();
     var userModel = require('./user/user.model.server')();
+    var profileModel = require('./profile/profile.model.server')(userModel);
+    var jobRoleModel = require('./jobRole/jobRole.model.server')(userModel);
 
     var models = {
         profileModel: profileModel,
