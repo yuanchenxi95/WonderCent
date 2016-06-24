@@ -5,7 +5,7 @@
 module.exports = function(app) {
 
     // load model
-    var model = require("./models/model.js");
+    var model = require("./models/model.js")();
     
     
 
