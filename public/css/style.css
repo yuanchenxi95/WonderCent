@@ -1,0 +1,85 @@
+input {
+    margin-bottom: 5px;
+}
+
+a.btn-block.btn {
+    margin-top: 5px;
+}
+
+.jw-application-view {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    height: 500px;
+    overflow: auto;
+}
+
+p.navbar-text.pull-right {
+    margin-right: 15px;
+}
+
+p.navbar-text.pull-left {
+    margin-left: 15px;
+}
+
+.jw-widget {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    /*margin-left: 10px;*/
+    /*margin-right: 10px;*/
+    position: relative;
+}
+
+.jw-widget-tool {
+    background-color: white;
+    position: absolute;
+    right: 0px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    padding-right: inherit;
+    border-bottom-left-radius: 8px;
+    z-index: 1029;
+}
+
+.jw-list-group {
+    display: none;
+}
+
+.panel-heading {
+    height: 70px;
+}
+
+.no-blue-link {
+    color: #3a3a3a;
+}
+
+.jw-application-pannel {
+    margin-top: 20px;
+    position: relative;
+}
+
+.navbar-fixed-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.navbar-fixed-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+div.flickr-results {
+    margin-top: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+div.flickr-results div {
+    padding: 0;
+}
+
+button.clear-button {
+    background-color: rgba(0, 0, 0, 0);
+    fill: rgba(0, 0, 0, 0);
+    color: rgba(0, 0, 0, 0);
+    border: none;
+}

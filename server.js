@@ -1,4 +1,3 @@
-// test
 var express = require('express');
 var app = express();
 
@@ -18,7 +17,7 @@ app.set('view engine', 'ejs');
 /// secret
 var secret = "MySecret";
 
-if(process.env.SESSION_SECRET) {
+if (process.env.SESSION_SECRET) {
     secret = process.env.SESSION_SECRET
 }
 
