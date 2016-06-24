@@ -42,7 +42,7 @@ module.exports = function () {
     }
 
     function findUserByEmail(email) {
-        return User.findONe({email: email});
+        return User.findOne({email: email});
     }
 
     function updatePassword(userId, password) {
