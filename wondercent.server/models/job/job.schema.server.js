@@ -9,7 +9,7 @@ module.exports = function () {
         _employeeUser    : {type: mongoose.Schema.Types.ObjectId, ref: "User"},
         _requestedUsers  : [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
 
-        bounty          : Number,
+        price          : Number,
         // set default due date to 2099-01-01
         dateDue         : {type: Date, default: new Date('2099-01-01')},
 

@@ -17,16 +17,43 @@ module.exports = function() {
         getMongooseModel: getMongooseModel,
         createJob: createJob,
         findJobById: findJobById,
-        findJobByJobname: findJobByJobname,
-        findJobByPriceRange: findJobByPriceRange,
+        findJobsByJobName: findJobsByJobName,
+        findJobsByPriceRange: findJobsByPriceRange,
         updateJob: updateJob,
         deleteJob: deleteJob
     };
+
+    return api;
 
     function getMongooseModel() {
         return Job;
     }
 
-    return api;
+    function createJob(job) {
+        return Job.create(job);
+    }
+
+    function findJobById(jobId) {
+        return Job.findOne({_id: jobId});
+    }
+
+    function findJobsByJobName(jobName) {
+        return Job.find({name: jobName});
+    }
+
+    function findJobsByPriceRange(min, max) {
+        return Job.find({price: {$lte:10, $gte:100}});
+    }
+    
+    function updateJob(jobId, job) {
+        delete job._id;
+
+        return Job.findOneAndUpdate({_id: jobId}, job);
+    }
+
+    function deleteJob(jobId) {
+        return Job.remove({_id: jobId});
+    }
+
 
 };
