@@ -1,8 +1,6 @@
 module.exports = function () {
     var mongoose = require("mongoose");
     var ProfileSchema = mongoose.Schema({
-        email       : String,
-        password    : String,
         firstName   : String,
         lastName    : String,
         gender      : {

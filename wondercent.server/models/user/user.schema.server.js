@@ -6,8 +6,10 @@ module.exports = function () {
 
     var UserSchema = mongoose.Schema({
         profile         : ProfileSchema,
-        _followingUsers  : {type: mongoose.Schema.Types.ObjectId, ref: "User"},
-        _followerUsers   : {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+        email       : String,
+        password    : String,
+        _followingUsers  : [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+        _followerUsers   : [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
 
         jobRoles        : [JobRoleSchema],
 
