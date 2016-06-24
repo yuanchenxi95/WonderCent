@@ -6,12 +6,13 @@ module.exports = function () {
 
     var UserSchema = mongoose.Schema({
         profile         : ProfileSchema,
-        softDelete      : {type: Boolean, default: false},
-        dateCreated     : {type: Date, default: Date.now()},
+        _followingUsers  : {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+        _followerUsers   : {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+
         jobRoles        : [JobRoleSchema],
 
-        _followingUsers  : {type: mongoose.Schema.Types.ObjectId, ref: "User"},
-        _followerUsers   : {type: mongoose.Schema.Types.ObjectId, ref: "User"}
+        dateCreated     : {type: Date, default: Date.now()},
+        softDelete      : {type: Boolean, default: false}
     }, { collection: "wondercent.user"});
     return UserSchema;
 };
