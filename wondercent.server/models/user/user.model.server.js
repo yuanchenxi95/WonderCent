@@ -19,7 +19,6 @@ module.exports = function () {
         updatePassword: updatePassword,
         updateEmail: updateEmail,
         addFollowingUser: addFollowingUser,
-        addFollowerUser: addFollowerUser,
         deleteUser: deleteUser,
         // findFacebookUser: findFacebookUser
     };
@@ -74,15 +73,15 @@ module.exports = function () {
             );
     }
 
-    function addFollowerUser(userId, addingId) {
-        return findUserById(userId)
-            .then(
-                function (user) {
-                    user._followerUsers.push(addingId);
-                    return user.save();
-                }
-            );
-    }
+    // function addFollowerUser(userId, addingId) {
+    //     return findUserById(userId)
+    //         .then(
+    //             function (user) {
+    //                 user._followerUsers.push(addingId);
+    //                 return user.save();
+    //             }
+    //         );
+    // }
 
     function deleteUser(userId) {
         return User.remove({_id: userId});
