@@ -5,15 +5,32 @@
 
 module.exports = function(userModel) {
 
-    var user = userModel.getMongooseModel();
+    var User = userModel.getMongooseModel();
 
     var api = {
-        createProfile: createProfile,
-        getProfileFromUser: getProfileFromUser,
         updateProfile: updateProfile,
         deleteProfile: deleteProfile
     };
 
     return api;
+
+
+    function updateProfile(profile, userId) {
+        return User
+            .findOne({_id: userId})
+            .then(function(user) {
+                user.profile = profile;
+                return user.save();
+            });
+    }
+
+    function deleteProfile(userId) {
+        return User
+            .findOne({_id: userId})
+            .then(function(user) {
+                user.profile = null;
+                return user.save();
+            });
+    }
 
 };

@@ -3,51 +3,60 @@
  */
 module.exports = function (userModel) {
 
-    var user = userModel.getMongooseModel();
+    var User = userModel.getMongooseModel();
 
     var api = {
         addJobRole: addJobRole,
-        getJobRolesFromUser: getJobRolesFromUser,
         updateJobRole: updateJobRole,
         deleteJobRole: deleteJobRole
     };
 
     return api;
 
-    function addJobRole(jobRole) {
-        return user.jobRoles.push(jobRole);
+    function addJobRole(jobRole, userId) {
+        return User
+            .findOne({_id: userId})
+            .then(function(user) {
+                user.jobRoles.push(jobRole);
+                return user.save();
+            });
+
     }
 
-    function getJobRolesFromUser() {
-        return user.jobRoles;
+    function updateJobRole(jobRoleId, jobRole, userId) {
+
+        return User
+            .findOne({_id: userId})
+            .then(function(user) {
+                var jobRoles = user.jobRoles;
+
+                for (var i in jobRoles) {
+                    if (jobRoles[i]._id === jobRoleId) {
+                        jobRoles.splice(i, 1);
+                        jobRoles.splice(i, 0, jobRole);
+
+                        // save to data base
+                        return user.save();
+                    }
+                }
+            });
+
     }
 
-    function updateJobRole(jobRoleId, jobRole) {
-        var jobRoles = user.jobRoles;
+    function deleteJobRole(jobRoleId, userId) {
 
-        for (var i in jobRoles) {
-            if (jobRoles[i]._id === jobRoleId) {
-                jobRoles.splice(i, 1);
-                jobRoles.splice(i, 0, jobRole);
+        return User
+            .findOne({_id: userId})
+            .then(function(user) {
+                for (var i in user.jobRoles) {
+                    if (user.jobRoles[i]._id === jobRoleId) {
+                        user.jobRoles.splice(i, 1);
+                        // save to data base
+                        return user.save();
+                    }
+                }
+            });
 
-                // save to data base
-                user.save();
-                return true;
-            }
-        }
-        return false;
-    }
-
-    function deleteJobRole(jobRoleId) {
-        for (var i in jobRoles) {
-            if (jobRoles[i]._id === jobRoleId) {
-                jobRoles.splice(i, 1);
-                // save to data base
-                user.save();
-                return true;
-            }
-        }
-        return false;
     }
 
 };
