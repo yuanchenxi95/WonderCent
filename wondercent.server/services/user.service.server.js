@@ -13,7 +13,7 @@ module.exports = function (app, models) {
     var jobRoleModel = models.jobRoleModel;
 
     app.post("/api/login", passport.authenticate('wondercent'), login);
-    app.post("/api/loggedin", loggedin);
+    app.get("/api/loggedin", loggedin);
     app.post("/api/register", register);
     app.post("/api/logout", authenticate, logout);
     app.get("/api/user", authenticate, findUserById);
@@ -22,7 +22,6 @@ module.exports = function (app, models) {
     app.put("/api/user/following", authenticate, addFollowingUser);
     app.delete("/api/user", authenticate, deleteUser);
 
-    app.post("/api/user/job/apply", authenticate, applyJob);
 
 
     passport.use('wondercent', new LocalStrategy(localStrategy));
@@ -217,56 +216,6 @@ module.exports = function (app, models) {
 
     }
 
-
-    function applyJob(req, res) {
-        var userId = req.user._id;
-        var jobId = req.body.jobId;
-
-        var newJobRole = {
-            role: "PENDING",
-            _job: jobId
-        };
-
-        jobRoleModel
-            .addJobRole(userId, newJobRole)
-            .then(
-                function (user) {
-                    return jobModel.findJobById(jobId)
-                },
-                function (error) {
-                    return error;
-                }
-            )
-            .then(
-                // update job
-                function (job) {
-                    for (var i in job._requestedUsers) {
-                        if (job._requestedUsers[i] === userId) {
-                            res.status(401).send("Already applied for this job: " + jobId);
-                            return;
-                        }
-                    }
-
-                    job._requestedUsers.push(userId);
-
-                    return jobModel.updateJob(jobId, job);
-                },
-                function (error) {
-                    return error;
-                }
-            )
-            .then(
-                function (user) {
-                    res.sendStatus(200);
-                },
-                function (error) {
-                    res.status(401).send(error);
-                }
-            );
-
-
-
-    }
 
 
 };
