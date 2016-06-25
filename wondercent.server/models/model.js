@@ -25,7 +25,7 @@ module.exports = function () {
         profileModel: profileModel,
         jobRoleModel: jobRoleModel,
         jobModel: jobModel,
-        userMode: userModel,
+        userModel: userModel,
     };
 
     return models;
