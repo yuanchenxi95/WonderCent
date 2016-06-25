@@ -17,8 +17,8 @@ module.exports = function (app, models) {
     app.get("/api/loggedin", loggedin);
     app.post("/api/register", register);
     app.post("/api/logout", authenticate, logout);
-    // app.put("/api/user/Email", authenticate, updateUserEmail);
-    app.put("/api/user/Password", authenticate, updateUserPassword);
+    // app.put("/api/user/email", authenticate, updateUserEmail);
+    app.put("/api/user/password", authenticate, updateUserPassword);
     app.put("/api/user/following", authenticate, addFollowingUser);
     app.delete("/api/user", authenticate, deleteUser);
 
