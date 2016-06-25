@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<div class="container">
+    <h2>Register</h2>
+
+    <div ng-show="model.success"
+         class="alert alert-success"
+         role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Success:</span>{{model.success}}
+    </div>
+
+    <div ng-show="model.error"
+         class="alert alert-danger"
+         role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>{{model.error}}
+    </div>
+    <form name="registerForm"
+          novalidate
+          ng-submit="registerForm.$valid && model.register(email, password, passwordAgain)">
+        <div class="form-group"
+             ng-class=" { 'has-error' : registerForm.email.$invalid && registerForm. $submitted }">
+            <input type="email"
+                   name="email"
+                   ng-model="email"
+                   class="form-control"
+                   placeholder="email"
+                   required />
+            <span class="help-block"
+                  ng-show="registerForm.email.$invalid && registerForm.$submitted">
+                    Please provide a email.
+            </span>
+        </div>
+
+        <div class="form-group"
+             ng-class=" { 'has-error' : registerForm.password.$invalid && registerForm.$submitted } ">
+            <input name="password"
+                   ng-model="password"
+                   class="form-control"
+                   placeholder="password"
+                   type="password"
+                   required />
+            <span class="help-block"
+                  ng-show="registerForm.password.$invalid && registerForm.$submitted">
+                Please provide a password.
+            </span>
+        </div>
+
+        <div class="form-group"
+             ng-class=" { 'has-error' : registerForm.passwordAgain.$invalid && registerForm.$submitted} ">
+            <input name="passwordAgain"
+                   ng-model="passwordAgain"
+                   class="form-control"
+                   placeholder="verify password"
+                   type="password"
+                   required />
+            <span class="help-block"
+                  ng-show="registerForm.passwordAgain.$invalid && registerForm.$submitted">
+                Passwords do not match.
+            </span>
+        </div>
+        <button type="submit"
+                class="btn btn-primary btn-block">Register</button>
+    </form>
+
+
+    <a class="btn btn-danger btn-block"
+       href="#/login">Cancel</a>
+</div>
