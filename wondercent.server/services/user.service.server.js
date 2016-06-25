@@ -11,13 +11,14 @@ module.exports = function (app, models) {
     var userModel = models.userModel;
     var jobModel = models.jobModel;
     var jobRoleModel = models.jobRoleModel;
+    var profileModel = models.profileModel;
 
     app.post("/api/login", passport.authenticate('wondercent'), login);
     app.get("/api/loggedin", loggedin);
     app.post("/api/register", register);
     app.post("/api/logout", authenticate, logout);
-    app.get("/api/user", authenticate, findUserById);
-    app.put("/api/user/Email", authenticate, updateUserEmail);
+    app.get("/api/user/profile/:userId", findUserProfileById);
+    // app.put("/api/user/Email", authenticate, updateUserEmail);
     app.put("/api/user/Password", authenticate, updateUserPassword);
     app.put("/api/user/following", authenticate, addFollowingUser);
     app.delete("/api/user", authenticate, deleteUser);
@@ -132,14 +133,14 @@ module.exports = function (app, models) {
     }
 
 
-    function findUserById(req, res) {
+    function findUserProfileById(req, res) {
         var userId = req.user._id;
 
         userModel
             .findUserById(userId)
             .then(
                 function (user) {
-                    res.json(user);
+                    res.json(user.profile);
 
                 },
                 function (error) {
@@ -148,21 +149,21 @@ module.exports = function (app, models) {
             );
     }
 
-    function updateUserEmail(req, res) {
-        var user = req.user;
-        var userId = user._id;
-
-        userModel
-            .updateEmail(userId, user.email)
-            .then(
-                function (user) {
-                    res.json(user);
-                },
-                function (error) {
-                    res.status(400).send("SeverError: Cannot update the email");
-                }
-            );
-    }
+    // function updateUserEmail(req, res) {
+    //     var user = req.user;
+    //     var userId = user._id;
+    //
+    //     userModel
+    //         .updateEmail(userId, user.email)
+    //         .then(
+    //             function (user) {
+    //                 res.json(user);
+    //             },
+    //             function (error) {
+    //                 res.status(400).send("SeverError: Cannot update the email");
+    //             }
+    //         );
+    // }
 
     function updateUserPassword(req, res) {
         var user = req.user;
@@ -184,8 +185,21 @@ module.exports = function (app, models) {
         var user = req.user;
         var userId = user._id;
 
-        userModel
-            .deleteUser(userId)
+        // soft delete
+
+        var newProfile = {
+            firstName   : "Unregistered",
+            lastName    : "Unregistered",
+            gender      : 'NOT_SPECIFIED',
+            profileImage: "",
+            major       : "",
+            field       : "",
+            description : "",
+            pDF         : ""
+        };
+
+        profileModel
+            .updateProfile(newProfile, userId)
             .then(
                 function (status) {
                     res.sendStatus(200);
