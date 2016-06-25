@@ -9,9 +9,9 @@
         var vm = this;
         vm.login = login;
 
-        function login(username, password) {
+        function login(email, password) {
             UserService
-                .login(username, password)
+                .login(email, password)
                 .then(
                     // Success
                     function(response) { // <- using promises
@@ -21,7 +21,7 @@
                             $location.url("/user/" + user._id);
                         } else {
                             // if responded with a null
-                            vm.error = "Username and password pair not found!";
+                            vm.error = "Email and password pair not found!";
                         }
                     },
                     // Error
@@ -31,7 +31,7 @@
 
             // Old way, insecure using http.get
             // UserService
-            //     .findUserByCredentials(username, password)
+            //     .findUserByCredentials(Email, password)
 
         }
     }

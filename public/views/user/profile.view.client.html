@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <span class="navbar-brand">
+                Profile
+            </span>
+            <p class="navbar-text pull-right">
+                <button ng-click="model.updateUser()"
+                        class="navbar-link clear-button"
+                        ng-disabled="profileForm.$invalid">
+                    <span class="glyphicon glyphicon-ok"
+                          aria-hidden="true"></span>
+                </button>
+            </p>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div ng-show="model.success" class="alert alert-success">
+        {{model.success}}
+    </div>
+
+    <div ng-show="model.error" class="alert alert-danger">
+        {{model.error}}
+    </div>
+
+    <form name="profileForm">
+        <div class="form-group"
+             ng-class="{ 'has-error' : profileForm.email.$invalid && !profileForm.email.$pristine }">
+            <label for="email">email</label> <!-- for must match the id bellow -->
+            <input name="email"
+                   ng-model="model.user.email"
+                   type="text"
+                   class="form-control"
+                   id="email"
+                   required />
+            <span class="help-block"
+                  ng-show="profileForm.email.$invalid && !profileForm.email.$pristine">
+                Please provide a email.
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="first">First Name</label> <!-- for must match the id bellow -->
+            <input ng-model="model.user.firstName"
+                   type="text"
+                   class="form-control"
+                   id="first" />
+        </div>
+
+        <div class="form-group">
+            <label for="last">Last Name</label> <!-- for must match the id bellow -->
+            <input ng-model="model.user.lastName"
+                   type="text"
+                   class="form-control"
+                   id="last" />
+        </div>
+
+        <a class="btn btn-primary btn-block"
+           href="#/user/{{model.user._id}}/website">Websites</a>
+
+        <a class="btn btn-danger btn-block"
+           ng-click="model.logOut()">Logout</a>
+
+        <a class="btn btn-danger btn-block"
+           ng-click="model.unregister()">Unregister</a>
+    </form>
+</div>

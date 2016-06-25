@@ -13,21 +13,21 @@
 
     <form name="loginForm"
           novalidate
-          ng-submit="loginForm.$valid && model.login(username, password)">
+          ng-submit="loginForm.$valid && model.login(email, password)">
 
-        <div name="usernameGroup"
+        <div name="emailGroup"
              class="form-group"
-             ng-class="{ 'has-error' : loginForm.username.$invalid && loginForm.$submitted }">
-            <input name="username"
-                   ng-model="username"
+             ng-class="{ 'has-error' : loginForm.email.$invalid && loginForm.$submitted }">
+            <input name="email"
+                   ng-model="email"
                    class="form-control"
-                   placeholder="username"
-                   type="text"
+                   placeholder="email"
+                   type="email"
                    required
                    autocorrect="off"
                    autocapitalize="off" />
-            <span ng-show="loginForm.username.$invalid && loginForm.$submitted"
-                  class="help-block">Please enter a username.</span>
+            <span ng-show="loginForm.email.$invalid && loginForm.$submitted"
+                  class="help-block">Please enter a email.</span>
         </div>
 
         <div name="passwordGroup"
