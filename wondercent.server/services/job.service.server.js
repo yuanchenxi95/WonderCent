@@ -24,10 +24,12 @@ module.exports = function (app, models) {
     //     softDelete      : {type: Boolean, default: false}
     // }, {collection: "wondercent.job"});
 
-    app.post("/api/job/update", authenticate, updateJob);
+    app.put("/api/job/update", authenticate, updateJob);
     app.post("/api/job/create", authenticate, createJob);
-    app.post("/api/job/apply", authenticate, applyJob);
+    app.put("/api/job/apply", authenticate, applyJob);
     app.delete("/api/job/delete", authenticate, deleteJob);
+    app.post("/api/job/update/deleteEmployeeUser", authenticate, deleteEmployeeUser);
+    app.post("/api/job/update/deleteRequestedUser", authenticate, deleteRequestUser);
 
     function authenticate(req, res, next) {
         if (!req.isAuthenticated()) {
@@ -69,6 +71,8 @@ module.exports = function (app, models) {
                 } else {
                     res.status(401).send("Not authenticated");
                 }
+
+                return;
 
             }
 
@@ -213,6 +217,62 @@ module.exports = function (app, models) {
 
     function deleteJob(req, res) {
         //TODO
+    }
+
+    function deleteEmployeeUser(req, res) {
+        var user = req.user;
+        var jobId = req.body.jobId;
+        var updatedJob;
+
+        for (var i in req.user.jobRoles) {
+            var jobRole = req.user.jobRoles[i];
+            if (jobRole._job === jobId) {
+
+                if (jobRole.role === 'ACCEPTOR') {
+                    jobModel
+                        .findJobById(jobId)
+                        .then(
+                            function(job) {
+                                job._employeeUser = null;
+                                return jobModel.updateJob(job);
+                            },
+                            function (error) {
+                                return error;
+                            }
+                        )
+                        .then(
+                            function(job) {
+                                updatedJob = job;
+                                jobRoleModel.deleteJobRole(jobRole._id, user._id);
+                            },
+                            function (error) {
+                                return error;
+                            }
+                        )
+                        .then(
+                            function (user) {
+                                res.json(updatedJob);
+                            },
+                            function (error) {
+                                res.status(401).send(error);
+                            }
+                        )
+
+                } else {
+                    res.status(401).send("You arr not authorized to cancel the employee of job: " + jobId);
+                }
+
+
+                return;
+            }
+
+
+        }
+        res.status(401).send("Cannot find the job in your jobRoles: " + jobId)
+    }
+
+    function deleteRequestUser(req, res) {
+        // TODO
     }
 };
 
