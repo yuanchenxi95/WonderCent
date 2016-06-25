@@ -30,7 +30,7 @@ module.exports = function () {
     }
 
     function createUser(user) {
-        return User.createUser(user);
+        return User.create(user);
     }
 
     function findUserById(userId) {

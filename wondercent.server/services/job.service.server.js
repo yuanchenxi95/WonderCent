@@ -24,7 +24,6 @@ module.exports = function (app, models) {
 
     app.post("/api/job/", authenticate, updateJob);
 
-
     function authenticate(req, res, next) {
         if (!req.isAuthenticated()) {
             res.status(401).send("Not authenticated");
