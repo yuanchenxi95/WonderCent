@@ -32,7 +32,7 @@ module.exports = function (app, models) {
 
     function authenticate(req, res, next) {
         if (!req.isAuthenticated()) {
-            res.sendStatus(401);
+            res.status(401).send("Not authenticated");
         } else {
             next();
         }

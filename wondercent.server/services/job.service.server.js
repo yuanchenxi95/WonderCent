@@ -22,16 +22,16 @@ module.exports = function (app, models) {
     //     softDelete      : {type: Boolean, default: false}
     // }, {collection: "wondercent.job"});
 
-    app.post("/api/user/profile", authenticate, updateUserProfile);
-    // app.post("/api/job/")
+    app.post("/api/job/", updateJob);
 
-    function authenticate(req, res, next) {
-        if (!req.isAuthenticated()) {
-            res.sendStatus(401);
-        } else {
-            next();
-        }
+    function updateJob(req, res) {
+        var job = req.body.job;
+
+        
+
+
     }
+
 
     function updateUserProfile(req, res) {
         var userId = req.user._id;
