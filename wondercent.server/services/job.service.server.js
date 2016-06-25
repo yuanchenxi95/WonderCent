@@ -6,28 +6,10 @@ module.exports = function (app, models) {
     var userModel = models.userModel;
     var jobRoleModel = models.jobRoleModel;
 
-    // var JobSchema = mongoose.Schema({
-    //     _employerUser    : {type: mongoose.Schema.Types.ObjectId, ref: "User"},
-    //     _employeeUser    : {type: mongoose.Schema.Types.ObjectId, ref: "User"}, *
-    //     _requestedUsers  : [{type: mongoose.Schema.Types.ObjectId, ref: "User"}], *
-    //
-    //     price          : Number,
-    //     // set default due date to 2099-01-01
-    //     dateDue         : {type: Date, default: new Date('2099-01-01')},
-    //
-    //     name            : String,
-    //     description     : String,
-    //     tags            : [String],
-    //     imageUrl        : String,
-    //
-    //     dateCreated     : {type: Date, default: Date.now()},
-    //     softDelete      : {type: Boolean, default: false}
-    // }, {collection: "wondercent.job"});
-
     app.put("/api/job/update", authenticate, updateJob);
     app.post("/api/job/create", authenticate, createJob);
     app.put("/api/job/apply", authenticate, applyJob);
-    app.delete("/api/job/delete", authenticate, deleteJob);
+    app.delete("/api/job/delete/:jobId", authenticate, deleteJob);
     app.post("/api/job/update/deleteEmployeeUser", authenticate, deleteEmployeeUser);
     app.post("/api/job/update/deleteRequestedUser", authenticate, deleteRequestUser);
 
@@ -216,7 +198,33 @@ module.exports = function (app, models) {
     }
 
     function deleteJob(req, res) {
-        //TODO
+        var user = req.user;
+        var jobId = req.params.jobId;
+
+        jobModel
+            .deleteJob(jobId)
+            .then(
+                function (job) {
+                    var employerId = job._employerUser;
+                    var employeeId = job._employeeUser;
+                    var requestedUsersId = job._requestedUsers;
+
+                    //SHOULD HANDLE ERROR
+                    jobRoleModel.deleteJobRoleByJobId(jobId, employerId);
+                    jobRoleModel.deleteJobRoleByJobId(jobId, employeeId);
+
+                    for (var i in requestedUsersId) {
+                        jobRoleModel.deleteJobRoleByJobId(jobId, requestedUsersId[i]);
+                    }
+
+                    res.send(200);
+
+                },
+                function (error) {
+                    res.status(401).send(error);
+                }
+            )
+
     }
 
     function deleteEmployeeUser(req, res) {
@@ -232,7 +240,7 @@ module.exports = function (app, models) {
                     jobModel
                         .findJobById(jobId)
                         .then(
-                            function(job) {
+                            function (job) {
                                 job._employeeUser = null;
                                 return jobModel.updateJob(job);
                             },
@@ -241,7 +249,7 @@ module.exports = function (app, models) {
                             }
                         )
                         .then(
-                            function(job) {
+                            function (job) {
                                 updatedJob = job;
                                 jobRoleModel.deleteJobRole(jobRole._id, user._id);
                             },
@@ -268,11 +276,59 @@ module.exports = function (app, models) {
 
 
         }
-        res.status(401).send("Cannot find the job in your jobRoles: " + jobId)
+        res.status(401).send("Cannot find the job in your jobRoles: " + jobId);
     }
 
     function deleteRequestUser(req, res) {
-        // TODO
+        var user = req.user;
+        var jobId = req.params.jobId;
+        var updatedJob;
+
+        for (var i in req.user.jobRoles) {
+            var jobRole = req.user.jobRoles[i];
+            if (jobRole._job === jobId) {
+
+                if (jobRole.role === 'ACCEPTOR') {
+                    jobModel
+                        .findJobById(jobId)
+                        .then(
+                            function (job) {
+                                job._employeeUser = null;
+                                return jobModel.updateJob(job);
+                            },
+                            function (error) {
+                                return error;
+                            }
+                        )
+                        .then(
+                            function (job) {
+                                updatedJob = job;
+                                jobRoleModel.deleteJobRole(jobRole._id, user._id);
+                            },
+                            function (error) {
+                                return error;
+                            }
+                        )
+                        .then(
+                            function (user) {
+                                res.json(updatedJob);
+                            },
+                            function (error) {
+                                res.status(401).send(error);
+                            }
+                        )
+
+                } else {
+                    res.status(401).send("You arr not authorized to cancel the employee of job: " + jobId);
+                }
+
+
+                return;
+            }
+
+
+        }
+        res.status(401).send("Cannot find the job in your jobRoles: " + jobId);
     }
 };
 

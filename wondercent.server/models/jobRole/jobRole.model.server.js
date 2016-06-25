@@ -8,7 +8,8 @@ module.exports = function (userModel) {
     var api = {
         addJobRole: addJobRole,
         updateJobRole: updateJobRole,
-        deleteJobRole: deleteJobRole
+        deleteJobRole: deleteJobRole,
+        deleteJobRoleByJobId: deleteJobRoleByJobId
     };
 
     return api;
@@ -50,6 +51,22 @@ module.exports = function (userModel) {
             .then(function(user) {
                 for (var i in user.jobRoles) {
                     if (user.jobRoles[i]._id === jobRoleId) {
+                        user.jobRoles.splice(i, 1);
+                        // save to data base
+                        return user.save();
+                    }
+                }
+            });
+
+    }
+
+    function deleteJobRoleByJobId(jobId, userId) {
+
+        return User
+            .findOne({_id: userId})
+            .then(function(user) {
+                for (var i in user.jobRoles) {
+                    if (user.jobRoles[i]._job === jobId) {
                         user.jobRoles.splice(i, 1);
                         // save to data base
                         return user.save();

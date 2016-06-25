@@ -17,7 +17,6 @@ module.exports = function (app, models) {
     app.get("/api/loggedin", loggedin);
     app.post("/api/register", register);
     app.post("/api/logout", authenticate, logout);
-    app.get("/api/user/profile/:userId", findUserProfileById);
     // app.put("/api/user/Email", authenticate, updateUserEmail);
     app.put("/api/user/Password", authenticate, updateUserPassword);
     app.put("/api/user/following", authenticate, addFollowingUser);
@@ -133,21 +132,7 @@ module.exports = function (app, models) {
     }
 
 
-    function findUserProfileById(req, res) {
-        var userId = req.user._id;
-
-        userModel
-            .findUserById(userId)
-            .then(
-                function (user) {
-                    res.json(user.profile);
-
-                },
-                function (error) {
-                    res.status(400).send("Email " + user.email + " not found");
-                }
-            );
-    }
+   
 
     // function updateUserEmail(req, res) {
     //     var user = req.user;
