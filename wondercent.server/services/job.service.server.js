@@ -3,6 +3,8 @@
  */
 module.exports = function (app, models) {
     var jobModel = models.jobModel;
+    var userModel = models.userModel;
+    var jobRoleModel = models.jobRoleModel;
 
     // var JobSchema = mongoose.Schema({
     //     _employerUser    : {type: mongoose.Schema.Types.ObjectId, ref: "User"},
@@ -22,7 +24,10 @@ module.exports = function (app, models) {
     //     softDelete      : {type: Boolean, default: false}
     // }, {collection: "wondercent.job"});
 
-    app.post("/api/job/", authenticate, updateJob);
+    app.post("/api/job/update", authenticate, updateJob);
+    app.post("/api/job/create", authenticate, createJob);
+    app.post("/api/job/apply", authenticate, applyJob);
+    app.delete("/api/job/delete", authenticate, deleteJob);
 
     function authenticate(req, res, next) {
         if (!req.isAuthenticated()) {
@@ -33,55 +38,47 @@ module.exports = function (app, models) {
     }
 
     function updateJob(req, res) {
-        var job = req.body.job;
+        var jobFromClient = req.body.job;
 
+        // should get user from the database
         for (var i in req.user.jobRoles) {
             var jobRole = req.user.jobRoles[i];
 
-            if (jobRole._job === job._id) {
-                switch (jobRole.role) {
-                    case 'CREATOR':
-                        updateJobAllFields(req, res, job);
-                        break;
-                    case 'ACCEPTOR':
-                        updateJobEmployee(req, res, job);
-                        break;
-                    case 'PENDING' :
-                        updateJobRequestedUsers(req, res, job);
-                        break;
-                    default:
-                        res.status(401).send("Invalid jobRole");
+            if (jobRole._job === jobFromClient._id) {
+
+                if (jobRole.role === 'CREATOR'
+                    && req.user._id === jobFromClient._employerUser) {
+
+                    jobModel.findJobById(jobFromClient._id)
+                        .then(
+                            function (job) {
+                                return jobModel.updateJob(jobFromClient._id, jobFromClient);
+                            },
+                            function (error) {
+                                return error;
+                            }
+                        )
+                        .then(
+                            function (job) {
+                                res.json(job);
+                            },
+                            function (error) {
+                                res.status(401).send(error);
+                            }
+                        );
+                } else {
+                    res.status(401).send("Not authenticated");
                 }
+
             }
 
         }
 
+        res.status(401).send("Job not found");
+
 
     }
 
-    function updateJobAllFields(req, res, jobFromClient) {
-        if (req.user._id === job._employerUser) {
-            jobModel.findJobById(jobFromClient._id)
-                .then(
-                    function (job) {
-                        return jobModel.updateJob(jobFromClient._id,  jobFromClient);
-                    },
-                    function (error) {
-                        return error;
-                    }
-                )
-                .then(
-                    function (job) {
-                        res.json(job);
-                    },
-                    function (error) {
-                        res.status(401).send(error);
-                    }
-                );
-        } else {
-            res.status(401).send("Not authenticated");
-        }
-    }
 
     function updateJobEmployee(req, res, jobFromClient) {
 
@@ -129,8 +126,93 @@ module.exports = function (app, models) {
             );
 
 
+    }
+
+    function createJob(req, res) {
+        var userId = req.user._id;
+
+        var newJob = req.body.job;
+
+        newJob._employerUser = req.user._id;
+
+        jobModel
+            .createJob(newJob)
+            .then(
+                function (job) {
+                    newJob = job;
+                    var newJobRole = {
+                        role: 'CREATOR',
+                        _job: job._id
+                    };
+                    return jobRoleModel.addJobRole(newJobRole, userId);
+
+                },
+                function (error) {
+                    return error;
+                }
+            )
+            .then(
+                function (user) {
+                    res.status(200).send(newJob);
+                },
+                function (error) {
+                    res.status(401).send(error);
+                }
+            );
+
 
     }
 
+    function applyJob(req, res) {
+        var userId = req.user._id;
+        var jobId = req.body.jobId;
+
+        var newJobRole = {
+            role: "PENDING",
+            _job: jobId
+        };
+
+        jobRoleModel
+            .addJobRole(userId, newJobRole)
+            .then(
+                function (user) {
+                    return jobModel.findJobById(jobId)
+                },
+                function (error) {
+                    return error;
+                }
+            )
+            .then(
+                // update job
+                function (job) {
+                    for (var i in job._requestedUsers) {
+                        if (job._requestedUsers[i] === userId) {
+                            res.status(401).send("Already applied for this job: " + jobId);
+                            return;
+                        }
+                    }
+
+                    job._requestedUsers.push(userId);
+
+                    return jobModel.updateJob(jobId, job);
+                },
+                function (error) {
+                    return error;
+                }
+            )
+            .then(
+                function (user) {
+                    res.sendStatus(200);
+                },
+                function (error) {
+                    res.status(401).send(error);
+                }
+            );
+
+    }
+
+    function deleteJob(req, res) {
+        //TODO
+    }
 };
 
