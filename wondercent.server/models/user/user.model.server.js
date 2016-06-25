@@ -63,6 +63,7 @@ module.exports = function () {
                 });
     }
 
+
     function addFollowingUser(userId, addingId) {
         return findUserById(userId)
             .then(
@@ -72,16 +73,6 @@ module.exports = function () {
                 }
             );
     }
-
-    // function addFollowerUser(userId, addingId) {
-    //     return findUserById(userId)
-    //         .then(
-    //             function (user) {
-    //                 user._followerUsers.push(addingId);
-    //                 return user.save();
-    //             }
-    //         );
-    // }
 
     function deleteUser(userId) {
         return User.remove({_id: userId});
