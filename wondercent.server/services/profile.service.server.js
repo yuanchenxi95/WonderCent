@@ -1,13 +1,6 @@
 /**
  * Created by ChenxiYuan on 6/24/16.
  */
-
-
-
-
-
-
-
 module.exports = function (app, models) {
     var profileModel = models.profileModel;
 
