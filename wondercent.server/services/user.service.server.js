@@ -16,6 +16,7 @@ module.exports = function (app, models) {
     app.post("/api/login", passport.authenticate('wondercent'), login);
     app.get("/api/loggedin", loggedin);
     app.post("/api/register", register);
+    
     app.post("/api/logout", authenticate, logout);
     // app.put("/api/user/email", authenticate, updateUserEmail);
     app.put("/api/user/password", authenticate, updateUserPassword);
