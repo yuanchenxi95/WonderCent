@@ -1,32 +1,59 @@
-<!--header-->
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <p class="navbar-text pull-left">
-            <a href="#/user/jobs" class="navbar-link">
-                  <span class="glyphicon glyphicon-chevron-left">
-                  </span>
-            </a>
-        </p>
-        <a class="navbar-brand">
-            Job Details
-        </a>
-    </div>
-    </div>
-</nav>
-{{model.job}}
-<!--footer-->
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container-fluid">
-        <div class="navbar-inner">
-            <p class="navbar-text pull-right">
-                <button href="#/user" class="navbar-link">
+<div ng-show="model.user">
+    <!--header-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-inner">
+                <p class="navbar-text pull-left">
+                    <a href="{{model.backURL}}" class="navbar-link">
+                      <span class="glyphicon glyphicon-chevron-left">
+                      </span>
+                    </a>
+                </p>
+                <a class="navbar-brand">
+                    Job Details
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!--footer-->
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container-fluid">
+            <div class="navbar-inner">
+                <p class="navbar-text pull-right">
+                    <a href="#/user" class="navbar-link">
                       <span class="glyphicon glyphicon-user">
                       </span>
-                </button>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div ng-show="!model.user">
+    <!--header-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-inner">
+                <p class="navbar-text pull-left">
+                    <a href="{{model.backURL}}" class="navbar-link">
+                      <span class="glyphicon glyphicon-chevron-left">
+                      </span>
+                    </a>
+                </p>
+                <a class="navbar-brand">
+                    Job Details
+                </a>
+            </div>
+            <p class="navbar-text pull-right">
+                <a href="#/login" class="navbar-link">
+                    Login
+                </a>
             </p>
         </div>
-    </div>
-</nav>
+    </nav>
+</div>
 
 <div class="container">
 
@@ -38,44 +65,30 @@
         {{model.error}}
     </div>
 
-    <form>
-        <div class="form-group">
-            <label for="newJobName">Name</label>
-            <input type="text"
-                   name="name"
-                   ng-model="model.newJob.name"
-                   class="form-control"
-                   id="newJobName"
-                   placeholder="Name"
-                   required/>
+    <div class="row">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8 text-center">
+                <img src="http://lorempixel.com/260/260/technics"
+                     class="thumbnail img-responsive center-block"></img>
+                <h1>{{model.job.name}}</h1>
+
+                <h3>${{model.job.price}}</h3>
+                <br />
+                <p>{{model.job.description}}</p>
+                <br />
+                <button ng-click="model.applyForJob(profileForm.$valid)"
+                        ng-hide="model.loggedIn || model.isThisJobMyJob()"
+                        class="btn btn-primary btn-block">Request for Job
+                </button>
+
+                <!-- Applicants List -->
+                <div ng-show="model.loggedIn && model.isThisJobMyJob()">
+                    <div ng-repeat="applicant in model.applicants">
+
+                    </div>
+                </div>
+
         </div>
-        <div class="form-group">
-            <label for="price">Price</label>
-            <input type="number"
-                   name="price"
-                   ng-model="model.newJob.price"
-                   id="price"
-                   class="form-control"
-                   placeholder="The price of the new Job"/>
-        </div>
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea rows="5"
-                      ng-model="model.newJob.description"
-                      name="description"
-                      id="description"
-                      class="form-control"
-                      placeholder="Description"></textarea>
-        </div>
-
-        <button type="submit" ng-click="model.createJob()"
-                class="btn btn-primary btn-block">Create
-        </button>
-
-        <a class="btn btn-danger btn-block"
-           ng-click="model.deleteJob()">Delete</a>
-
-    </form>
-
-
+        <div class="col-xs-2"></div>
+    </div>
 </div>

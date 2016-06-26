@@ -13,6 +13,7 @@
             findJobsByEmployerId: findJobsByEmployerId,
             findJobsByRequestedUserId: findJobsByRequestedUserId,
             findJobById: findJobById,
+            applyJob: applyJob,
             createJob: createJob,
             updateJob: updateJob,
             deleteJob: deleteJob

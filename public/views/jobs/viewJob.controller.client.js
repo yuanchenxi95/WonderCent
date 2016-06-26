@@ -10,16 +10,31 @@
         // vm.findJobsByEmployeeId = findJobsByEmployeeId;
         // vm.findJobsByEmployerId = findJobsByEmployerId;
         // vm.findJobsByRequestedUserId = findJobsByRequestedUserId;
+        vm.isThisJobMyJob = isThisJobMyJob;
+        vm.applyForJob = applyForJob;
 
         // execute on load time.
         function init() {
             vm.user = $rootScope.currentUser;
 
+            if (user) {
+                vm.loggedIn = true;
+            } else {
+                vm.loggedIn = false;
+            }
+
+            if ($routeParams["query"]) {
+                vm.backURL = "#search/" + $routeParams["query"];
+            } else {
+                vm.backURL = "#user/jobs";
+            }
+
             JobService
                 .findJobById($routeParams["jobId"])
                 .then(
-                    function(job) {
-                        vm.job = job;
+                    function(response) {
+                        vm.job = response.data;
+                        console.log(vm.job);
                     },
                     function(error) {
                         vm.success = null;
@@ -27,14 +42,26 @@
                     }
                 );
 
-            findJobsByEmployeeId();
-            findJobsByEmployerId();
-            findJobsByRequestedUserId();
+            vm.applicants = [];
+            
 
+            if (vm.user) {
+                findJobsByEmployeeId();
+                findJobsByEmployerId();
+                findJobsByRequestedUserId();
+            }
         }
 
         init();
 
+        function isThisJobMyJob() {
+            for (var i in vm.jobsAsEmployer) {
+                if (vm.jobsAsEmployer[i]._id === vm.job._id) {
+                    return false;
+                }
+            }
+            return false;
+        }
 
         function findJobsByEmployeeId() {
             JobService
@@ -60,6 +87,21 @@
                         vm.error = error;
                     }
                 );
+        }
+
+        function applyForJob() {
+            if (vm.user) {
+                JobService
+                    .applyJob(jobId)
+                    .then(
+                        function(response) {
+                            vm.hasApplied = true;
+                        },
+                        function(error) {
+                            vm.erro = error.data;
+                        }
+                    );
+            }
         }
 
         function findJobsByRequestedUserId() {

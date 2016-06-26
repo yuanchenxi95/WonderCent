@@ -13,6 +13,14 @@ input {
     margin-bottom: 5px;
 }
 
+.jobIcon {
+    font-size: 100px;
+    vertical-align: middle;
+    text-align: center;
+    width: 200px;
+    height: 200px;
+}
+
 a.btn-block.btn {
     margin-top: 5px;
 }
