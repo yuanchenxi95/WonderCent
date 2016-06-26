@@ -1,9 +1,6 @@
 /**
  * Created by ChenxiYuan on 6/24/16.
  */
-/**
- * Created by ChenxiYuan on 6/24/16.
- */
 
 
 module.exports = function() {
