@@ -77,16 +77,27 @@
                 <p>{{model.job.description}}</p>
                 <br />
                 <button ng-click="model.applyForJob(profileForm.$valid)"
-                        ng-show="model.loggedIn && model.canRequestJob()"
+                        ng-show="model.canRequest"
                         class="btn btn-primary btn-block">Request for Job
                 </button>
 
-                {{vm.applicants}}
                 <!-- Applicants List -->
-                <div ng-show="model.loggedIn && model.canRequestJob()">
-                    <div ng-repeat="applicant in model.applicants">
-                        {{applicant}}
-                    </div>
+                <div ng-show="model.applicants && model.applicants.length > 0">
+                <h4 class="text-left">Applicants</h4>
+                <ul class="list-group">
+                    <li ng-repeat="applicant in model.applicants"
+                        class="list-group-item">
+                            <a href="#/public/profile/{{applicant._userId}}">
+                                <span ng-if="applicant.profile === ''">Anonymous User</span>
+                                <span ng-show="applicant.profile.firstName">{{applicant.profile.firstName}}</span>
+                            </a>
+                            <!--<a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{page._id}}"-->
+                               <!--class="pull-right">-->
+                                <!--<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>-->
+                            <!--</a>-->
+                        <!--{{applicant}}-->
+                    </li>
+                </ul>
                 </div>
 
         </div>
