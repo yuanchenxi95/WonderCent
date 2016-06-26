@@ -116,34 +116,37 @@ module.exports = function (app, models) {
         var userId = req.user._id;
         var jobId = req.body.jobId;
 
-        var newJobRole = {
-            role: "PENDING",
-            _job: jobId
-        };
-
-        jobRoleModel
-            .addJobRole(userId, newJobRole)
+        jobModel
+            .findJobById(jobId)
             .then(
-                function (user) {
-                    return jobModel.findJobById(jobId)
+                function (job) {
+                    if (job._employerUser.toString() === jobId) {
+                        res.status(401).send("Employer cannot apply for this job");
+                        return;
+                    } else {
+                        for (var i in job._requestedUsers) {
+                            if (job._requestedUsers[i] === userId) {
+                                res.status(401).send("Already applied for this job: " + jobId);
+                                return;
+                            }
+                        }
+                        job._requestedUsers.push(userId);
+                        return jobModel.updateJob(jobId, job);
+                    }
                 },
                 function (error) {
                     return error;
                 }
             )
             .then(
-                // update job
                 function (job) {
-                    for (var i in job._requestedUsers) {
-                        if (job._requestedUsers[i] === userId) {
-                            res.status(401).send("Already applied for this job: " + jobId);
-                            return;
-                        }
-                    }
+                    var newJobRole = {
+                        role: "PENDING",
+                        _job: jobId
+                    };
 
-                    job._requestedUsers.push(userId);
-
-                    return jobModel.updateJob(jobId, job);
+                    jobRoleModel
+                        .addJobRole(userId, newJobRole)
                 },
                 function (error) {
                     return error;
@@ -157,7 +160,6 @@ module.exports = function (app, models) {
                     res.status(401).send(error);
                 }
             );
-
     }
 
     function deleteJob(req, res) {

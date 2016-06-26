@@ -98,7 +98,7 @@
                 controller: "PublicProfileController",
                 controllerAs: "model",
                 resolve: {
-                    loggedIn: checkLoggedIn
+                    loggedIn: checkLoggedinAcceptGuest
                 }
             })
             ////////////////////////////////////

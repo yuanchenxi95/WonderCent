@@ -21,6 +21,11 @@
         init();
 
         function searchJob() {
+
+            if (vm.searchTerm === "" || !vm.searchTerm) {
+                return;
+            }
+
             if (vm.searchTerm != $routeParams.query) {
                 $location.url("/search/" + vm.searchTerm);
                 return;
