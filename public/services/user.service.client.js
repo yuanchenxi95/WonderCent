@@ -13,8 +13,8 @@
             findUserById          : findUserById,
             findUserByUsername    : findUserByUsername,
             findUserByCredentials : findUserByCredentials,
-            updateUser            : updateUser,
-            deleteUser            : deleteUser,
+            updateUserPassword    : updateUserPassword,
+            updateUserFollowing   : updateUserFollowing,
             login                 : login,
             register              : register,
             logOut                : logOut,
@@ -64,15 +64,12 @@
             return $http.get(url); // returns a promise
         }
 
-        /**
-         * U: Updates the user with matching _id with the given user information.
-         * @param {number} userId - user to update
-         * @param {user} user - user to be used to update
-         * @returns {boolean} true if the update was successful
-         */
-        function updateUser(userId, user) {
-            var url = "/api/user/" + userId;
-            return $http.put(url, user); // returns a promise
+        function updateUserPassword(userId, newPassword) {
+
+        }
+
+        function updateUserFollowing(userId, newFollow) {
+
         }
 
         /**

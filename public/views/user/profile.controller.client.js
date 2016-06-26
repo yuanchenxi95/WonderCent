@@ -3,7 +3,7 @@
         .module("WonderCentApp")
         .controller("ProfileController", ProfileController);
 
-    function ProfileController($routeParams, $rootScope, $location, UserService) {
+    function ProfileController($routeParams, $rootScope, $location, UserService, ProfileService) {
 
         var vm = this;
         // put all event handlers at the top, just like variables
@@ -15,26 +15,39 @@
         
         // execute on load time.
         function init() {
-            UserService
-                .findUserById(id)
-                .then(
-                    function(response) {
-                        vm.user = response.data;
-                    },
-                    function(error) {
-                        vm.error = error.data;
-                    }
-                );
+            vm.user = $rootScope.currentUser;
+            console.log($rootScope.currentUser);
+            // UserService
+            //     .findUserById(id)
+            //     .then(
+            //         function(response) {
+            //             vm.user = response.data;
+            //         },
+            //         function(error) {
+            //             vm.error = error.data;
+            //         }
+            //     );
         }
         init();
 
         function updateUser() {
-            UserService
-                .updateUser(id, vm.user)
+
+            ProfileService
+                .updateProfile(id, vm.user.profile)
                 .then(
                     function(response) {
                         vm.error = null;
-                        vm.success = "User successfully updated!"
+                        vm.success = "";
+                        return UserService.updateUserPassword(id, vm.user.password);
+                    },
+                    function(error) {
+                        vm.success = null;
+                        vm.error = error.data("Failed to update user profile!");
+                    }
+                )
+                .then(function(response) {
+                        vm.error = null;
+                        vm.success = "User and Profile information successfully updated!";
                     },
                     function(error) {
                         vm.success = null;
