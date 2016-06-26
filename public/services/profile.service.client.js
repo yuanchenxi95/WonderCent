@@ -16,20 +16,20 @@
         return api;
 
         function findProfileByEmail(userEmail) {
-            var url = "/api/profile/" + userEmail;
+            var url = "/api/user/profile/" + userEmail;
             return $http.get(url);
         }
 
         function findProfileById(userId) {
-            var url = "/api/profile?userId=" + userId;
+            var url = "/api/user/profile?userId=" + userId;
             return $http.get(url);
         }
 
         function updateProfile(userId, newProfile) {
-            var url = "/api/profile/";
+            var url = "/api/user/profile/";
             var body = {
                 profile: newProfile
-            }
+            };
             return $http.put(url, newProfile); // returns a promise
         }
     }
