@@ -36,7 +36,7 @@
                    type="text"
                    class="form-control"
                    id="email"
-                   required />
+                   readonly/>
             <span class="help-block"
                   ng-show="profileForm.email.$invalid && !profileForm.email.$pristine">
                 Please provide a email.
@@ -48,7 +48,7 @@
             <input ng-model="model.user.profile.firstName"
                    type="text"
                    class="form-control"
-                   id="first" />
+                   id="first"/>
         </div>
 
         <div class="form-group">
@@ -56,17 +56,8 @@
             <input ng-model="model.user.profile.lastName"
                    type="text"
                    class="form-control"
-                   id="last" />
+                   id="last"/>
         </div>
-        <!--gender      : {-->
-        <!--type: String,-->
-        <!--enum: ['MALE', 'FEMALE', 'NOT_SPECIFIED']-->
-        <!--},-->
-        <!--profileImage: String,-->
-        <!--major       : String,-->
-        <!--field       : String,-->
-        <!--description : String,-->
-        <!--pDF         : String-->
 
         <div class="form-group">
             <label for="gender">Gender</label> <!-- for must match the id bellow -->
@@ -76,6 +67,43 @@
                     ng-options="v for v in model.genderList">
             </select>
         </div>
+
+
+        <div class="form-gourp">
+            <label for="profileImage">Profile Image</label>
+            <input ng-model="model.user.profile.profileImage"
+                   type="url"
+                   class="form-control"
+                   id="profileImage"/>
+        </div>
+
+        <div class="form-gourp">
+            <label for="major">Major</label>
+            <input ng-model="model.user.profile.major"
+                   type="text"
+                   class="form-control"
+                   id="major"/>
+        </div>
+
+        <div class="form-gourp">
+            <label for="field">Field</label>
+            <input ng-model="model.user.profile.field"
+                   type="text"
+                   class="form-control"
+                   id="field"/>
+        </div>
+
+        <div class="form-gourp">
+            <label for="description">Description</label>
+            <textarea ng-model="model.user.profile.description"
+                      rows="5"
+                      class="form-control"
+                      id="description">
+            </textarea>
+        </div>
+
+        <!--pDF         : String-->
+
 
         <a class="btn btn-primary btn-block"
            href="#/user/{{model.user._id}}/jobs">My Jobs</a>
