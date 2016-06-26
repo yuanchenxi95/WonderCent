@@ -77,14 +77,15 @@
                 <p>{{model.job.description}}</p>
                 <br />
                 <button ng-click="model.applyForJob(profileForm.$valid)"
-                        ng-hide="model.loggedIn || model.isThisJobMyJob()"
+                        ng-show="model.loggedIn && model.canRequestJob()"
                         class="btn btn-primary btn-block">Request for Job
                 </button>
 
+                {{vm.applicants}}
                 <!-- Applicants List -->
-                <div ng-show="model.loggedIn && model.isThisJobMyJob()">
+                <div ng-show="model.loggedIn && model.canRequestJob()">
                     <div ng-repeat="applicant in model.applicants">
-
+                        {{applicant}}
                     </div>
                 </div>
 
