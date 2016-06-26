@@ -1,9 +1,10 @@
 
 <div class="container">
+    <h2>Search Jobs</h2>
     <div class="input-group">
-        <input ng-model="searchText" type="text" class="form-control">
+        <input ng-model="vm.searchText" type="text" class="form-control">
     <span class="input-group-btn">
-        <a ng-click="model.searchPhotos(searchText)"
+        <a ng-click="model.search(vm.searchText)"
            class="btn btn-default"
            type="button">
             <span class="glyphicon glyphicon-search"></span>
