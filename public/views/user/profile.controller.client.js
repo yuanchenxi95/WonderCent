@@ -17,7 +17,6 @@
         // execute on load time.
         function init() {
             vm.user = $rootScope.currentUser;
-            console.log($rootScope.currentUser);
             // UserService
             //     .findUserById(id)
             //     .then(
@@ -59,6 +58,7 @@
         }
 
         function updateProfile() {
+            console.log(vm.user.profile);
             ProfileService
                 .updateProfile(id, vm.user.profile)
                 .then(

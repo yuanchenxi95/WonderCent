@@ -30,7 +30,8 @@
             var body = {
                 profile: newProfile
             };
-            return $http.put(url, newProfile); // returns a promise
+            console.log(newProfile);
+            return $http.put(url, body); // returns a promise
         }
     }
 })();
