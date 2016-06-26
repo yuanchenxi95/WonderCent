@@ -155,8 +155,7 @@ module.exports = function (app, models) {
     function updateUserPassword(req, res) {
         var password = req.body.password;
         var userId = req.user._id;
-
-
+        
         userModel
             .updatePassword(userId, bcrypt.hashSync(password))
             .then(
