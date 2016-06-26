@@ -57,7 +57,8 @@ module.exports = function() {
     }
 
     function searchJob(jobName) {
-        return Job.find({name: /jobName/});
+        var searchTerm = jobName;
+        return Job.find({"name": {'$regex': searchTerm}});
     }
 
     function findJobsByEmployeeId(employeeId) {

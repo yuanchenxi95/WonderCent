@@ -37,6 +37,32 @@
             return deferred.promise;
         };
 
+        var checkSearchLoggedIn = function($q, $timeout, $http, $location, $rootScope, UserService) {
+
+            var deferred = $q.defer();
+
+            UserService
+                .checkLoggedIn()
+                .then(
+                    function(response) {
+                        var user = response.data;
+                        if (user === '0') {
+                            $rootScope.currentUser = null;
+                            deferred.resolve();
+                        } else {
+                            $rootScope.currentUser = user;
+                            deferred.resolve();
+                        }
+                    },
+                    function(error) {
+                        deferred.reject();
+                        $location.url('/');
+                    }
+                );
+
+            return deferred.promise;
+        };
+
         $routeProvider
             .when("/login", {
                 templateUrl: "views/user/login.view.client.html",
@@ -105,12 +131,18 @@
             .when("/search/:query", {
                 templateUrl: "views/search/searchResult.view.client.html",
                 controller: "SearchResultController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkSearchLoggedIn
+                }
             })
             .when("/search", {
                 templateUrl: "views/search/search.view.client.html",
                 controller: "SearchController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkSearchLoggedIn
+                }
             })
             .when("/search/:query/job/:jobId", {
                 templateUrl: "views/jobs/viewJob.view.client.html",

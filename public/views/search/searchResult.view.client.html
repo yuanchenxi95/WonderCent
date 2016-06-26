@@ -1,14 +1,85 @@
+<div ng-show="model.user">
+
+
+    <!--header-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-inner">
+                <p class="navbar-text pull-left">
+                    <a href="#/user/jobs" class="navbar-link">
+                      <span class="glyphicon glyphicon-chevron-left">
+                      </span>
+                    </a>
+                </p>
+                <a class="navbar-brand">
+                    Search
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!--footer-->
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container-fluid">
+            <div class="navbar-inner">
+                <p class="navbar-text pull-right">
+                    <a href="#/user" class="navbar-link">
+                      <span class="glyphicon glyphicon-user">
+                      </span>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div ng-show="!model.user">
+    <!--header-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-inner">
+                <a class="navbar-brand">
+                    Search
+                </a>
+            </div>
+            <p class="navbar-text pull-right">
+                <a href="#/login" class="navbar-link">
+                    Login
+                </a>
+            </p>
+        </div>
+    </nav>
+</div>
 
 <div class="container">
     <h2>Search Jobs</h2>
-    <div class="input-group">
-        <input ng-model="vm.searchText" type="text" class="form-control">
-    <span class="input-group-btn">
-        <a ng-click="model.search(vm.searchText)"
-           class="btn btn-default"
-           type="button">
-            <span class="glyphicon glyphicon-search"></span>
-        </a>
-    </span>
+    <!--{{model.searchTerm}}-->
+    <!--<br>-->
+    <!--{{model.jobs}}-->
+    <!--{{model.user}}-->
+
+    <form name="searchForm"
+          novalidate
+          ng-submit="model.searchJob()">
+        <div class="input-group">
+            <input ng-model="model.searchTerm" type="text" class="form-control">
+                <span class="input-group-btn">
+                <button type="submit"
+                        class="btn btn-default">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </div>
+    </form>
+
+
+    <br>
+    <div>
+        We found {{model.jobs.length}} jobs for you
+        <ul class="list-group">
+            <li ng-repeat="job in model.jobs" class="list-group-item">
+                <a href="#/search/{{model.searchTerm}}/job/{{job._id}}">{{job.name}}</a>
+            </li>
+        </ul>
     </div>
 </div>

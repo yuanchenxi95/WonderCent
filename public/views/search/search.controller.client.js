@@ -7,14 +7,20 @@
         .controller("SearchController", SearchController);
 
     // View model design pattern
-    function SearchController($location) {
+    function SearchController($location, $rootScope) {
         // $location allows you to programmatically change the url: allows read or set the current url.
         var vm = this;
 
-        vm.search = search;
+        function init() {
+            vm.user = $rootScope.currentUser;
+        }
 
-        function search(searchTerm) {
-            $location.url("/search/" + searchTerm);
+        init();
+
+        vm.searchJob = searchJob;
+
+        function searchJob() {
+            $location.url("/search/" + vm.searchTerm);
         }
 
     }
