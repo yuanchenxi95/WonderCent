@@ -19,7 +19,7 @@ module.exports = function (app, models) {
 
     function updateUserProfile(req, res) {
         var userId = req.user._id;
-        var profile = req.user.profile;
+        var profile = req.body.profile;
 
         profileModel.updateUserProfile(profile, userId);
     }

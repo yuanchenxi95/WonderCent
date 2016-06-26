@@ -65,55 +65,6 @@ module.exports = function (app, models) {
 
     }
 
-
-    function updateJobEmployee(req, res, jobFromClient) {
-
-        jobModel.findJobById(jobFromClient._id)
-            .then(
-                function (job) {
-                    var jobUpdated = job;
-                    jobUpdated._employeeUser = jobFromClient._employeeUser;
-                    return jobModel.updateJob(jobFromClient._id, jobUpdated);
-                },
-                function (error) {
-                    return error;
-                }
-            )
-            .then(
-                function (job) {
-                    res.json(job);
-                },
-                function (error) {
-                    res.status(401).send(error);
-                }
-            );
-
-    }
-
-    function updateJobRequestedUsers(req, res, jobFromClient) {
-        jobModel.findJobById(jobFromClient._id)
-            .then(
-                function (job) {
-                    var jobUpdated = job;
-                    jobUpdated._employeeUser = jobFromClient._employeeUser;
-                    return jobModel.updateJob(jobFromClient._id, jobUpdated);
-                },
-                function (error) {
-                    return error;
-                }
-            )
-            .then(
-                function (job) {
-                    res.json(job);
-                },
-                function (error) {
-                    res.status(401).send(error);
-                }
-            );
-
-
-    }
-
     function createJob(req, res) {
         var userId = req.user._id;
 

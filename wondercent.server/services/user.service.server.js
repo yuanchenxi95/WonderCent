@@ -136,7 +136,7 @@ module.exports = function (app, models) {
    
 
     // function updateUserEmail(req, res) {
-    //     var user = req.user;
+    //     var user = req.body.email;
     //     var userId = user._id;
     //
     //     userModel
@@ -152,7 +152,7 @@ module.exports = function (app, models) {
     // }
 
     function updateUserPassword(req, res) {
-        var user = req.user;
+        var user = req.body.password;
         var userId = user._id;
 
         userModel
