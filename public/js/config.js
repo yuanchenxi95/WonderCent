@@ -94,6 +94,24 @@
                     loggedIn: checkLoggedIn
                 }
             })
+            .when("/user/job/:jobId", {
+                templateUrl: "views/jobs/viewJob.view.client.html",
+                controller: "ViewJobController",
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkLoggedIn
+                }
+            })
+            .when("/search/:query", {
+                templateUrl: "views/search/search.view.client.html",
+                controller: "SearchController",
+                controllerAs: "model"
+            })
+            .when("/search/:query/job/:jobId", {
+                templateUrl: "views/jobs/viewJob.view.client.html",
+                controller: "ViewJobController",
+                controllerAs: "model"
+            })
             .otherwise({
                 redirectTo: "/login"
             });
