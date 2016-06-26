@@ -43,7 +43,18 @@
                 );
 
             vm.applicants = [];
-            
+            for (var i in job._requestedUsers) {
+                UserService
+                    .findUserById(job._requestedUsers[i])
+                    .then(
+                        function(user) {
+                            applicants.push(user);
+                        },
+                        function(error) {
+                            vm.error = error.data;
+                        }
+                    )
+            }
 
             if (vm.user) {
                 findJobsByEmployeeId();
