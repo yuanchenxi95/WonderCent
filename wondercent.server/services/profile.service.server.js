@@ -3,6 +3,7 @@
  */
 module.exports = function (app, models) {
     var profileModel = models.profileModel;
+    var userModel = models.userModel;
 
     // app.get("/api/user/profile", authenticate, getUserProfile);
     app.put("/api/user/profile", authenticate, updateUserProfile);
@@ -41,6 +42,7 @@ module.exports = function (app, models) {
             .findUserById(userId)
             .then(
                 function (user) {
+
                     res.json(user.profile);
 
                 },

@@ -144,9 +144,8 @@ module.exports = function (app, models) {
                         role: "PENDING",
                         _job: jobId
                     };
-
-                    jobRoleModel
-                        .addJobRole(userId, newJobRole)
+                    return jobRoleModel
+                        .addJobRole(newJobRole, userId);
                 },
                 function (error) {
                     return error;

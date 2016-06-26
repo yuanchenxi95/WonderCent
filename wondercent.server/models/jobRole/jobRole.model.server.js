@@ -17,10 +17,14 @@ module.exports = function (userModel) {
     function addJobRole(jobRole, userId) {
         return User
             .findOne({_id: userId})
-            .then(function(user) {
-                user.jobRoles.push(jobRole);
-                return user.save();
-            });
+            .then(
+                function (user) {
+                    user.jobRoles.push(jobRole);
+                    return user.save();
+                },
+                function (error) {
+                    return error;
+                });
 
     }
 
@@ -28,7 +32,7 @@ module.exports = function (userModel) {
 
         return User
             .findOne({_id: userId})
-            .then(function(user) {
+            .then(function (user) {
                 var jobRoles = user.jobRoles;
 
                 for (var i in jobRoles) {
@@ -48,7 +52,7 @@ module.exports = function (userModel) {
 
         return User
             .findOne({_id: userId})
-            .then(function(user) {
+            .then(function (user) {
                 for (var i in user.jobRoles) {
                     if (user.jobRoles[i]._id === jobRoleId) {
                         user.jobRoles.splice(i, 1);
@@ -64,7 +68,7 @@ module.exports = function (userModel) {
 
         return User
             .findOne({_id: userId})
-            .then(function(user) {
+            .then(function (user) {
                 for (var i in user.jobRoles) {
                     if (user.jobRoles[i]._job === jobId) {
                         user.jobRoles.splice(i, 1);

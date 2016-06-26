@@ -12,6 +12,7 @@
         var vm = this;
 
         function init() {
+
             vm.profileUserId = $routeParams.userId;
 
             ProfileService
