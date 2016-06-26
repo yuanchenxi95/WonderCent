@@ -37,7 +37,7 @@
             return deferred.promise;
         };
 
-        var checkSearchLoggedIn = function($q, $timeout, $http, $location, $rootScope, UserService) {
+        var checkLoggedinAcceptGuest = function($q, $timeout, $http, $location, $rootScope, UserService) {
 
             var deferred = $q.defer();
 
@@ -93,7 +93,14 @@
                 }
                 // this might be a list of multiple checks, example: check logged in..., then check user role.
             })
-            
+            .when("/public/profile/:userId", {
+                templateUrl: "views/user/publicProfile.view.client.html",
+                controller: "PublicProfileController",
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkLoggedIn
+                }
+            })
             ////////////////////////////////////
             // jobs
             .when("/user/jobs", {
@@ -133,7 +140,7 @@
                 controller: "SearchResultController",
                 controllerAs: "model",
                 resolve: {
-                    loggedIn: checkSearchLoggedIn
+                    loggedIn: checkLoggedinAcceptGuest
                 }
             })
             .when("/search", {
@@ -141,7 +148,7 @@
                 controller: "SearchController",
                 controllerAs: "model",
                 resolve: {
-                    loggedIn: checkSearchLoggedIn
+                    loggedIn: checkLoggedinAcceptGuest
                 }
             })
             .when("/search/:query/job/:jobId", {
