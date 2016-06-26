@@ -18,7 +18,8 @@ module.exports = function (app, models) {
     }
 
     function updateUserProfile(req, res) {
-        var userId = req.user._id;
+        var user = req.user;
+        var userId = user._id;
         var profile = req.body.profile;
 
         profileModel
@@ -28,7 +29,7 @@ module.exports = function (app, models) {
                     res.json(profile);
                 },
                 function (error){
-                    res.status(400).send(errror);
+                    res.status(400).send(error);
                 }
             );
     }
