@@ -21,7 +21,7 @@
         }
 
         function findProfileById(userId) {
-            var url = "/api/user/profile?userId=" + userId;
+            var url = "/api/user/profile/" + userId;
             return $http.get(url);
         }
 
