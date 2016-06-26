@@ -12,7 +12,7 @@
         var vm = this;
 
         function init() {
-
+            vm.user = $rootScope.currentUser;
             vm.profileUserId = $routeParams.userId;
 
             ProfileService

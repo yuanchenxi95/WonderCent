@@ -42,9 +42,7 @@ module.exports = function (app, models) {
             .findUserById(userId)
             .then(
                 function (user) {
-
                     res.json(user.profile);
-
                 },
                 function (error) {
                     res.status(400).send("UserId " + userId + " not found");

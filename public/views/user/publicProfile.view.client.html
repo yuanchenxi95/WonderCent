@@ -1,60 +1,120 @@
+<div ng-show="model.user">
+    <!--header-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-inner">
+                <!--<p class="navbar-text pull-left">-->
+                    <!--<a href="#/user/jobs" class="navbar-link">-->
+                      <!--<span class="glyphicon glyphicon-chevron-left">-->
+                      <!--</span>-->
+                    <!--</a>-->
+                <!--</p>-->
+                <a class="navbar-brand">
+                    Public Profile Page
+                </a>
+            </div>
+        </div>
+    </nav>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Profile</h3>
+    <!--footer-->
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container-fluid">
+            <div class="navbar-inner">
+                <p class="navbar-text pull-right">
+                    <a href="#/user" class="navbar-link">
+                      <span class="glyphicon glyphicon-user">
+                      </span>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div ng-show="!model.user">
+    <!--header-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-inner">
+                <a class="navbar-brand">
+                    Public Profile Page
+                </a>
+            </div>
+            <p class="navbar-text pull-right">
+                <a href="#/login" class="navbar-link">
+                    Login
+                </a>
+            </p>
+        </div>
+    </nav>
+</div>
+<body>
+<div class="container">
+    <div ng-show="!model.profile">
+
+        <h2>His/Her profile is not available</h2>
+
     </div>
-    <div class="panel-body">
-        <div class="form-group">
-            <label for="first">First Name</label> <!-- for must match the id bellow -->
-            <input ng-model="model.profile.firstName"
-                   type="text"
-                   class="form-control"
-                   id="first"/>
-        </div>
-        <div class="form-group">
-            <label for="last">Last Name</label> <!-- for must match the id bellow -->
-            <input ng-model="model.profile.lastName"
-                   type="text"
-                   class="form-control"
-                   id="last"/>
-        </div>
-        <div class="form-group">
-            <label for="gender">Gender</label> <!-- for must match the id bellow -->
-            <select id="gender"
-                    class="form-control"
-                    ng-model="model.profile.gender">
-                <option value="MALE">Male</option>
-                <option value="FEMALE">Female</option>
-                <option value="NOT_SPECIFIED">Not Specified</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="major">Major</label> <!-- for must match the id bellow -->
-            <select id="major"
-                    class="form-control"
-                    ng-model="model.profile.major">
-                <option value="CS">Computer Science</option>
-                <option value="BI">Biology</option>
-                <option value="EE">Electrical Engineering</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="field">Career Field</label> <!-- for must match the id bellow -->
-            <select id="field"
-                    class="form-control"
-                    ng-model="model.profile.field">
-                <option value="WEB_DEV">Web Development</option>
-                <option value="GRAPHICS_DESIGN">Graphics Design</option>
-                <option value="BAKER">Baker</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="description">Career Summary</label> <!-- for must match the id bellow -->
+
+    <div ng-show="model.profile">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Profile</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="first">First Name</label> <!-- for must match the id bellow -->
+                    <input ng-model="model.profile.firstName"
+                           type="text"
+                           class="form-control"
+                           id="first"
+                           readonly/>
+                </div>
+                <div class="form-group">
+                    <label for="last">Last Name</label> <!-- for must match the id bellow -->
+                    <input ng-model="model.profile.lastName"
+                           type="text"
+                           class="form-control"
+                           id="last"
+                           readonly/>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label> <!-- for must match the id bellow -->
+                    <input ng-model="model.profile.gender"
+                           type="text"
+                           class="form-control"
+                           id="gender"
+                           readonly/>
+                </div>
+                <div class="form-group">
+                    <label for="major">Major</label> <!-- for must match the id bellow -->
+                    <input id="major"
+                           class="form-control"
+                           ng-model="model.profile.major"
+                           readonly/>
+                </div>
+                <div class="form-group">
+                    <label for="field">Career Field</label> <!-- for must match the id bellow -->
+                    <input id="field"
+                           class="form-control"
+                           ng-model="model.profile.field"
+                           readonly/>
+                </div>
+                <div class="form-group">
+                    <label for="description">Career Summary</label> <!-- for must match the id bellow -->
                     <textarea rows="5"
                               class="form-control"
                               id="description"
                               ng-model="model.profile.description"
-                              placeholder="Add a short summary about you and your skills here.">{{model.profile.description}}</textarea>
+                              placeholder="Add a short summary about you and your skills here."
+                              readonly>
+                        {{model.profile.description}}
+                    </textarea>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+</body>
