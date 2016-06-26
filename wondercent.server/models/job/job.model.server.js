@@ -16,9 +16,12 @@ module.exports = function() {
         findJobById: findJobById,
         findJobsByJobName: findJobsByJobName,
         findJobsByPriceRange: findJobsByPriceRange,
+        findJobsByEmployeeId: findJobsByEmployeeId,
+        findJobsByEmployerId: findJobsByEmployerId,
+        findJobsByRequestedUserId: findJobsByRequestedUserId,
         updateJob: updateJob,
         deleteJob: deleteJob,
-        searchJob: searchJob
+        searchJob: searchJob,
     };
 
     return api;
@@ -56,6 +59,20 @@ module.exports = function() {
     function searchJob(jobName) {
         return Job.find({name: /jobName/});
     }
+
+    function findJobsByEmployeeId(employeeId) {
+        return Job.find({_employeeUser: employeeId});
+    }
+
+    function findJobsByEmployerId(employerId) {
+        return Job.find({_employerUser: employerId});
+    }
+
+    function findJobsByRequestedUserId(reqUserId) {
+        return Job.find({_requestedUsers: reqUserId});
+    }
+    
+    
 
 
 };
