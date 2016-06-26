@@ -22,9 +22,6 @@ module.exports = function (app, models) {
     app.put("/api/user/password", authenticate, updateUserPassword);
     app.put("/api/user/following", authenticate, addFollowingUser);
     app.delete("/api/user", authenticate, deleteUser);
-    app.get("/api/user/jobs/creatingJobs/", authenticate, findCreatorJobForUser);
-    app.get("/api/user/jobs/acceptorJobs/", authenticate, findAcceptorJobsForUser);
-    app.get("/api/user/jobs/pendingJobs/", authenticate, findPendingJobsForUser);
 
 
 
@@ -219,57 +216,6 @@ module.exports = function (app, models) {
 
     }
     
-    function findCreatorJobForUser(req, res) {
-        var user = req.user;
-        var userId = user._id;
-        
-        jobModel
-            .findJobsByEmployerId(userId)
-            .then(
-                function (jobs) {
-                    res.json(jobs);
-                },
-                function (error) {
-                    res.status(404).send("Unable to find jobs");
-                }
-            )
-        
-    }
-
-    function findAcceptorJobsForUser(req, res) {
-        var user = req.user;
-        var userId = user._id;
-
-        jobModel
-            .findJobsByEmployeeId(userId)
-            .then(
-                function (jobs) {
-                    res.json(jobs);
-                },
-                function (error) {
-                    res.status(404).send("Unable to find jobs");
-                }
-            )
-
-    }
-
-    function findPendingJobsForUser(req, res) {
-        var user = req.user;
-        var userId = user._id;
-
-        jobModel
-            .findJobsByRequestedUserId(userId)
-            .then(
-                function (jobs) {
-                    res.json(jobs);
-                },
-                function (error) {
-                    res.status(404).send("Unable to find jobs");
-                }
-            )
-
-    }
-
 
 
 };

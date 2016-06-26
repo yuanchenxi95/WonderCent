@@ -13,6 +13,9 @@ module.exports = function (app, models) {
     app.post("/api/job/update/deleteEmployeeUser", authenticate, deleteEmployeeUser);
     app.post("/api/job/update/deleteRequestedUser", authenticate, deleteRequestUser);
     app.get("/api/job/search/:searchTerm", searchJob);
+    app.get("/api/user/jobs/creatingJobs/:userId", authenticate, findCreatorJobForUser);
+    app.get("/api/user/jobs/acceptorJobs/:userId", authenticate, findAcceptorJobsForUser);
+    app.get("/api/user/jobs/pendingJobs/:userId", authenticate, findPendingJobsForUser);
 
     function authenticate(req, res, next) {
         if (!req.isAuthenticated()) {
@@ -298,5 +301,58 @@ module.exports = function (app, models) {
             )
 
     }
+
+
+    function findCreatorJobForUser(req, res) {
+        var user = req.user;
+        var userId = req.params.userId;
+
+        jobModel
+            .findJobsByEmployerId(userId)
+            .then(
+                function (jobs) {
+                    res.json(jobs);
+                },
+                function (error) {
+                    res.status(404).send("Unable to find jobs");
+                }
+            )
+
+    }
+
+    function findAcceptorJobsForUser(req, res) {
+        var user = req.user;
+        var userId = req.params.userId;
+
+        jobModel
+            .findJobsByEmployeeId(userId)
+            .then(
+                function (jobs) {
+                    res.json(jobs);
+                },
+                function (error) {
+                    res.status(404).send("Unable to find jobs");
+                }
+            )
+
+    }
+
+    function findPendingJobsForUser(req, res) {
+        var user = req.user;
+        var userId = req.params.userId;
+
+        jobModel
+            .findJobsByRequestedUserId(userId)
+            .then(
+                function (jobs) {
+                    res.json(jobs);
+                },
+                function (error) {
+                    res.status(404).send("Unable to find jobs");
+                }
+            )
+
+    }
+
 };
 

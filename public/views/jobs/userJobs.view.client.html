@@ -1,0 +1,56 @@
+
+
+<!--header-->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <p class="navbar-text pull-left">
+                <a href="#/user" class="navbar-link">
+                      <span class="glyphicon glyphicon-chevron-left">
+                      </span>
+                </a>
+            </p>
+            <a class="navbar-brand">
+                My jobs
+            </a>
+            <p class="navbar-text pull-right">
+                <a href="#/user/job/new" class="navbar-link">
+                      <span class="glyphicon glyphicon-plus">
+                      </span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+<!--footer-->
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <p class="navbar-text pull-right">
+                <a href="#/user" class="navbar-link">
+                      <span class="glyphicon glyphicon-user">
+                      </span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+
+    <h3>Jobs I created</h3>
+    <ul class="list-group">
+        <li ng-repeat="job in model.jobsAsEmployer" class="list-group-item">
+            <a href="#">{{job.name}}</a>
+            <a href="#" class="pull-right">
+                <span class="glyphicon glyphicon-cog"></span>
+            </a>
+        </li>
+    </ul>
+    <h3>Jobs I accepted</h3>
+
+    <h3>Jobs I applied</h3>
+
+</div>

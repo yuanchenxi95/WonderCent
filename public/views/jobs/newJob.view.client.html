@@ -1,0 +1,82 @@
+
+
+<!--header-->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <p class="navbar-text pull-left">
+            <a href="#/user" class="navbar-link">
+                      <span class="glyphicon glyphicon-chevron-left">
+                      </span>
+            </a>
+        </p>
+        <a class="navbar-brand">
+            New job
+        </a>
+        </div>
+    </div>
+</nav>
+
+<!--footer-->
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <p class="navbar-text pull-right">
+                <button href="#/user" class="navbar-link">
+                      <span class="glyphicon glyphicon-user">
+                      </span>
+                </button>
+            </p>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div ng-show="model.success" class="alert alert-success">
+        {{model.success}}
+    </div>
+
+    <div ng-show="model.error" class="alert alert-danger">
+        {{model.error}}
+    </div>
+
+    <form>
+        <div class="form-group">
+            <label for="newJobName">Name</label>
+            <input type="text"
+                   name="name"
+                   ng-model="model.newJob.name"
+                   class="form-control"
+                   id="newJobName"
+                   placeholder="Name"
+                   required/>
+        </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="number"
+                   name="price"
+                   id="price"
+                   class="form-control"
+                   placeholder="The price of the new Job"/>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea rows="5"
+                      ng-model="model.newJob.description"
+                      name="description"
+                      id="description"
+                      class="form-control"
+                      placeholder="Description"></textarea>
+        </div>
+
+        <button type="submit" ng-click="model.createJob()"
+                class="btn btn-primary btn-block">Create
+        </button>
+
+        <a class="btn btn-danger btn-block"
+           ng-click="model.deleteJob()">Delete</a>
+
+    </form>
+
+
+</div>

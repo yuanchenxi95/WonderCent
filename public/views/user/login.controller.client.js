@@ -18,7 +18,7 @@
                         var user = response.data;
                         if (user) { // Truthy: model.error has to be there to render
                             $rootScope.currentUser = user;
-                            $location.url("/user/" + user._id);
+                            $location.url("/user");
                         } else {
                             // if responded with a null
                             vm.error = "Email and password pair not found!";

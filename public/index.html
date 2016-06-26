@@ -6,15 +6,22 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="initial-scale=1.25, user-scalable=no">
 
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <link rel="stylesheet" type="text/css" href="css/textAngular.css" />
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css"/>
+    <link rel="stylesheet" type="text/css" href="css/textAngular.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+
 
     <script src="js/jquery.js"></script>
     <script src="js/jquery-ui.js"></script>
     <script src="js/jquery.ui.touch-punch.min.js"></script>
+
+    <!--&lt;!&ndash;jQuery Validation&ndash;&gt;-->
+    <!--<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script>-->
+
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
@@ -31,29 +38,23 @@
     <script src="views/user/login.controller.client.js"></script>
     <script src="views/user/profile.controller.client.js"></script>
     <script src="views/user/register.controller.client.js"></script>
-    <!--<script src="views/website/website-list.controller.client.js"></script>-->
-    <!--<script src="views/website/website-new.controller.client.js"></script>-->
-    <!--<script src="views/website/website-edit.controller.client.js"></script>-->
-    <!--<script src="views/page/page-list.controller.client.js"></script>-->
-    <!--<script src="views/page/page-new.controller.client.js"></script>-->
-    <!--<script src="views/page/page-edit.controller.client.js"></script>-->
-    <!--<script src="views/widget/widget-list.controller.client.js"></script>-->
-    <!--<script src="views/widget/widget-chooser.controller.client.js"></script>-->
-    <!--<script src="views/widget/widget-edit.controller.client.js"></script>-->
-    <!--<script src="views/widget/widget-flickr-search.controller.client.js"></script>-->
+
+    <!--jobs controllers-->
+    <script src="views/jobs/userJobs.controller.client.js"></script>
+    <script src="views/jobs/newJob.controller.client.js"></script>
+
 
     <!--<script src="directives/wam-directives.js"></script>-->
 
+    <!--*.service.client.js-->
     <script src="services/user.service.client.js"></script>
     <script src="services/profile.service.client.js"></script>
-    <!--<script src="services/website.service.client.js"></script>-->
-    <!--<script src="services/page.service.client.js"></script>-->
-    <!--<script src="services/widget.service.client.js"></script>-->
-    <!--<script src="services/flickr.service.client.js"></script>-->
+    <script src="services/job.service.client.js"></script>
+
 
     <title>WonderCent</title>
 </head>
 <body>
-<div><div ng-view="WonderCentView"></div></div>
+<div ng-view="WonderCentView"></div>
 </body>
 </html>
