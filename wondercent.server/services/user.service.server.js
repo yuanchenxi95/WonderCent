@@ -61,7 +61,10 @@ module.exports = function (app, models) {
             .then(
                 function (user) {
 
+
                     if (!user) {
+                        return done(null, false);
+                    } else if (user.softDelete === true) {
                         return done(null, false);
                     } else if (user && bcrypt.compareSync(password, user.password)) {
                         return done(null, user);
@@ -188,7 +191,15 @@ module.exports = function (app, models) {
         profileModel
             .updateProfile(newProfile, userId)
             .then(
-                function (status) {
+                function (profile) {
+                    return userModel.softDeleteUser(userId);
+                },
+                function (error) {
+                    return error;
+                }
+            )
+            .then(
+                function (user) {
                     res.sendStatus(200);
                 },
                 function (error) {

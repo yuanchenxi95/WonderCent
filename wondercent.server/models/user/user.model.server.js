@@ -20,6 +20,7 @@ module.exports = function () {
         updateEmail: updateEmail,
         addFollowingUser: addFollowingUser,
         deleteUser: deleteUser,
+        softDeleteUser: softDeleteUser
         // findFacebookUser: findFacebookUser
     };
 
@@ -76,5 +77,19 @@ module.exports = function () {
 
     function deleteUser(userId) {
         return User.remove({_id: userId});
+    }
+
+    function softDeleteUser(userId) {
+        User
+            .findOne({_id: userId})
+            .then(
+                function (user) {
+                    user.softDelete = true;
+                    return user.save();
+                },
+                function (error) {
+                    return error;
+                }
+            )
     }
 };

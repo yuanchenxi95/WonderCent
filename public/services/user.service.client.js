@@ -18,7 +18,8 @@
             login                 : login,
             register              : register,
             logOut                : logOut,
-            checkLoggedIn         : checkLoggedIn
+            checkLoggedIn         : checkLoggedIn,
+            deleteUser            : deleteUser
         };
         return api;
 
@@ -82,7 +83,7 @@
          * @returns {boolean} true if the deletion was successful
          */
         function deleteUser(userId) {
-            var url = "/api/user/" + userId;
+            var url = "/api/user";
             return $http.delete(url); // returns a promise
         }
 

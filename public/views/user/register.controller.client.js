@@ -22,7 +22,6 @@
                 .then(
                     function(response) {
                         var user = response.data;
-                        console.log(user);
                         $rootScope.currentUser = user;
                         $location.url("/user/" + user._id);
                     },
