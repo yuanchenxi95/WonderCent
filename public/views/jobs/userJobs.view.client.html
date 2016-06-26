@@ -53,14 +53,14 @@
     <h3>Jobs I accepted</h3>
     <ul class="list-group">
         <li ng-repeat="job in model.jobsAsEmployee" class="list-group-item">
-            <a href="#">{{job.name}}</a>
+            <a href="#/user/job/{{job._id}}">{{job.name}}</a>
         </li>
     </ul>
 
     <h3>Jobs I applied</h3>
     <ul class="list-group">
         <li ng-repeat="job in model.jobsAsRequestedUser" class="list-group-item">
-            <a href="#">{{job.name}}</a>
+            <a href="#/user/job/{{job._id}}">{{job.name}}</a>
         </li>
     </ul>
 
