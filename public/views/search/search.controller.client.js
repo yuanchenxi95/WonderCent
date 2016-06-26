@@ -11,9 +11,10 @@
         // $location allows you to programmatically change the url: allows read or set the current url.
         var vm = this;
 
-        vm.search = search;
 
-        function search(searchTerm) {
+        vm.searchJob = searchJob;
+
+        function searchJob(searchTerm) {
             $location.url("/search/" + searchTerm);
         }
 

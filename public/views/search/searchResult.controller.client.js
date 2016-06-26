@@ -7,14 +7,29 @@
         .controller("SearchResultController", SearchResultController);
 
     // View model design pattern
-    function SearchResultController($location) {
+    function SearchResultController($location, $routeParams, JobService) {
         // $location allows you to programmatically change the url: allows read or set the current url.
         var vm = this;
+        vm.searchJob = searchJob;
 
-        vm.search = search;
+        function init() {
+            vm.searchTerm = $routeParams.query;
+            searchJob();
+        }
 
-        function search(searchTerm) {
-            $location.url("/search/" + searchTerm);
+        init();
+
+        function searchJob() {
+            JobService
+                .searchJob(vm.searchTerm)
+                .then(
+                    function (response) {
+                        vm.jobs = response.data;
+                    },
+                    function (error) {
+                        vm.error = error;
+                    }
+                );
         }
 
     }

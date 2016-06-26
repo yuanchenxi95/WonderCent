@@ -1,14 +1,22 @@
-
 <div class="container">
     <h2>Search Jobs</h2>
+    <!--{{model.searchTerm}}-->
+    <!--<br>-->
+    <!--{{model.jobs}}-->
     <div class="input-group">
-        <input ng-model="vm.searchText" type="text" class="form-control">
+        <input ng-model="model.searchTerm" type="text" class="form-control">
     <span class="input-group-btn">
-        <a ng-click="model.search(vm.searchText)"
+        <a ng-click="model.searchJob()"
            class="btn btn-default"
            type="button">
             <span class="glyphicon glyphicon-search"></span>
         </a>
     </span>
     </div>
+
+    <ul class="list-group">
+        <li ng-repeat="job in model.jobs" class="list-group-item">
+            <a href="#/search/{{model.searchTerm}}/job/{{job._id}}">{{job.name}}</a>
+        </li>
+    </ul>
 </div>
