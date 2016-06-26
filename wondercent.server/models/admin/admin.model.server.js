@@ -7,7 +7,7 @@
 module.exports = function() {
     var mongoose = require('mongoose');
 
-    var AdminSchema = require('./job.schema.server')();
+    var AdminSchema = require('./admin.schema.server.js')();
 
     var Admin = mongoose.model('Admin', AdminSchema);
 
