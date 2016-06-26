@@ -7,11 +7,9 @@
     function ViewJobController($location, $routeParams, $rootScope, JobService, ProfileService) {
         // $location allows you to programmatically change the url: allows read or set the current url.
         var vm = this;
-        // vm.findJobsByEmployeeId = findJobsByEmployeeId;
-        // vm.findJobsByEmployerId = findJobsByEmployerId;
-        // vm.findJobsByRequestedUserId = findJobsByRequestedUserId;
         vm.canRequestJob = canRequestJob;
         vm.applyForJob = applyForJob;
+        vm.canRequest = false;
 
         // execute on load time.
         function init() {
@@ -40,6 +38,7 @@
                         vm.job = response.data;
                         console.log(vm.job);
                         findUsersByRequestedUserID();
+                        vm.canRequest = canRequestJob();
                     },
                     function(error) {
                         vm.success = null;
@@ -56,8 +55,12 @@
                 ProfileService
                     .findProfileById(vm.job._requestedUsers[i])
                     .then(
-                        function(user) {
-                            applicants.push(user);
+                        function(profile) {
+                            vm.applicants.push({
+                                profile: profile.data,
+                                _userId: vm.job._requestedUsers[i]
+                            });
+                            console.log(vm.applicants);
                         },
                         function(error) {
                             vm.error = error.data;
@@ -68,6 +71,7 @@
 
         function canRequestJob() {
             if (!vm.loggedIn) {
+                console.log(vm);
                 return true; // You can, but you need to log in first.
             }
 
@@ -92,6 +96,8 @@
                             vm.error = error.data;
                         }
                     );
+            } else {
+                $location.url("/login");
             }
         }
     }
