@@ -5,7 +5,7 @@ module.exports = function (app, models) {
     var profileModel = models.profileModel;
 
     // app.get("/api/user/profile", authenticate, getUserProfile);
-    app.post("/api/user/profile", authenticate, updateUserProfile);
+    app.put("/api/user/profile", authenticate, updateUserProfile);
     app.get("/api/user/profile/:userId", findUserProfileById);
 
 
@@ -21,7 +21,16 @@ module.exports = function (app, models) {
         var userId = req.user._id;
         var profile = req.body.profile;
 
-        profileModel.updateUserProfile(profile, userId);
+        profileModel
+            .updateProfile(profile, userId)
+            .then(
+                function(profile) {
+                    res.json(profile);
+                },
+                function (error){
+                    res.status(400).send(errror);
+                }
+            );
     }
 
     function findUserProfileById(req, res) {
