@@ -58,6 +58,24 @@
                    class="form-control"
                    id="last" />
         </div>
+        <!--gender      : {-->
+        <!--type: String,-->
+        <!--enum: ['MALE', 'FEMALE', 'NOT_SPECIFIED']-->
+        <!--},-->
+        <!--profileImage: String,-->
+        <!--major       : String,-->
+        <!--field       : String,-->
+        <!--description : String,-->
+        <!--pDF         : String-->
+
+        <div class="form-group">
+            <label for="gender">Gender</label> <!-- for must match the id bellow -->
+            <select id="gender"
+                    class="form-control"
+                    ng-model="model.user.profile.gender"
+                    ng-options="v for v in model.genderList">
+            </select>
+        </div>
 
         <a class="btn btn-primary btn-block"
            href="#/user/{{model.user._id}}/jobs">My Jobs</a>

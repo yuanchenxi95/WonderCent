@@ -12,6 +12,8 @@
         vm.unregister = unregister;
         vm.logOut = logOut;
 
+        vm.genderList = ['MALE', 'FEMALE', 'NOT_SPECIFIED'];
+
         var id = $rootScope.currentUser._id;
 
         // execute on load time.
