@@ -14,7 +14,8 @@
             findJobsByRequestedUserId: findJobsByRequestedUserId,
             getJobById: getJobById,
             createJob: createJob,
-            updateJob: updateJob
+            updateJob: updateJob,
+            deleteJob: deleteJob
         };
         return api;
 
@@ -63,6 +64,11 @@
             };
 
             return $http.put(url, body);
+        }
+
+        function deleteJob(jobId) {
+            var url = "/api/job/delete/" + jobId;
+            return $http.delete(url);
         }
 
     }

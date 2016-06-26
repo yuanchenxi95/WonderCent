@@ -64,7 +64,17 @@
         }
 
         function deleteJob() {
-            goBackToJobList();
+            JobService
+                .deleteJob(vm.jobId)
+                .then(
+                    function(response) {
+                        goBackToJobList();
+                    },
+                    function (error) {
+                        vm.error = error.data;
+                    }
+                )
+
         }
 
         function goBackToJobList() {

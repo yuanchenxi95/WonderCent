@@ -180,7 +180,7 @@ module.exports = function (app, models) {
                         jobRoleModel.deleteJobRoleByJobId(jobId, requestedUsersId[i]);
                     }
 
-                    res.send(200);
+                    res.sendStatus(200);
 
                 },
                 function (error) {
