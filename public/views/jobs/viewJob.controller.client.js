@@ -4,7 +4,7 @@
         .controller("ViewJobController", ViewJobController);
 
     // View model design pattern
-    function ViewJobController($location, $routeParams, $rootScope, JobService, UserService) {
+    function ViewJobController($location, $routeParams, $rootScope, JobService, ProfileService) {
         // $location allows you to programmatically change the url: allows read or set the current url.
         var vm = this;
         // vm.findJobsByEmployeeId = findJobsByEmployeeId;
@@ -53,8 +53,8 @@
         function findUsersByRequestedUserID() {
             vm.applicants = [];
             for (var i in vm.job._requestedUsers) {
-                UserService
-                    .findUserById(vm.job._requestedUsers[i])
+                ProfileService
+                    .findProfileById(vm.job._requestedUsers[i])
                     .then(
                         function(user) {
                             applicants.push(user);
