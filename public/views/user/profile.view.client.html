@@ -30,7 +30,7 @@
     <form name="profileForm">
         <div class="form-group"
              ng-class="{ 'has-error' : profileForm.email.$invalid && !profileForm.email.$pristine }">
-            <label for="email">email</label> <!-- for must match the id bellow -->
+            <label for="email">Email</label> <!-- for must match the id bellow -->
             <input name="email"
                    ng-model="model.user.email"
                    type="text"
@@ -45,7 +45,7 @@
 
         <div class="form-group">
             <label for="first">First Name</label> <!-- for must match the id bellow -->
-            <input ng-model="model.user.firstName"
+            <input ng-model="model.user.profile.firstName"
                    type="text"
                    class="form-control"
                    id="first" />
@@ -53,14 +53,14 @@
 
         <div class="form-group">
             <label for="last">Last Name</label> <!-- for must match the id bellow -->
-            <input ng-model="model.user.lastName"
+            <input ng-model="model.user.profile.lastName"
                    type="text"
                    class="form-control"
                    id="last" />
         </div>
 
         <a class="btn btn-primary btn-block"
-           href="#/user/{{model.user._id}}/website">Websites</a>
+           href="#/user/{{model.user._id}}/jobs">My Jobs</a>
 
         <a class="btn btn-danger btn-block"
            ng-click="model.logOut()">Logout</a>
