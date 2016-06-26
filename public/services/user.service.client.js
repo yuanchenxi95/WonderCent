@@ -65,7 +65,11 @@
         }
 
         function updateUserPassword(userId, newPassword) {
-
+            var url = "/api/user/password";
+            var body = {
+                password: newPassword
+            }
+            return $http.put(url, body);
         }
 
         function updateUserFollowing(userId, newFollow) {

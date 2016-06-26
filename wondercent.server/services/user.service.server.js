@@ -60,6 +60,7 @@ module.exports = function (app, models) {
             .findUserByEmail(email)
             .then(
                 function (user) {
+
                     if (!user) {
                         return done(null, false);
                     } else if (user && bcrypt.compareSync(password, user.password)) {
@@ -152,11 +153,12 @@ module.exports = function (app, models) {
     // }
 
     function updateUserPassword(req, res) {
-        var user = req.body.password;
-        var userId = user._id;
+        var password = req.body.password;
+        var userId = req.user._id;
+
 
         userModel
-            .updatePassword(userId, bcrypt.hashSync(user.password))
+            .updatePassword(userId, bcrypt.hashSync(password))
             .then(
                 function (user) {
                     res.json(user);

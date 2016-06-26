@@ -5,14 +5,6 @@
             <span class="navbar-brand">
                 Profile
             </span>
-            <p class="navbar-text pull-right">
-                <button ng-click="model.updateProfile()"
-                        class="navbar-link clear-button"
-                        ng-disabled="profileForm.$invalid">
-                    <span class="glyphicon glyphicon-ok"
-                          aria-hidden="true"></span>
-                </button>
-            </p>
         </div>
     </div>
 </nav>
@@ -27,91 +19,136 @@
         {{model.error}}
     </div>
 
-    <form name="profileForm">
-        <div class="form-group"
-             ng-class="{ 'has-error' : profileForm.email.$invalid && !profileForm.email.$pristine }">
-            <label for="email">Email</label> <!-- for must match the id bellow -->
-            <input name="email"
-                   ng-model="model.user.email"
-                   type="text"
-                   class="form-control"
-                   id="email"
-                   readonly/>
-            <span class="help-block"
-                  ng-show="profileForm.email.$invalid && !profileForm.email.$pristine">
-                Please provide a email.
-            </span>
+    <form name="passwordForm">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">User Information</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group"
+                     ng-class="{ 'has-error' : passwordForm.email.$invalid && model.submitted }">
+                    <label for="email">Email</label> <!-- for must match the id bellow -->
+                    <input name="email"
+                           ng-model="model.user.email"
+                           type="text"
+                           class="form-control"
+                           id="email"
+                           readonly/>
+                    <span class="help-block"
+                          ng-show="passwordForm.email.$invalid && model.submitted">
+                        Please provide a email.
+                    </span>
+                </div>
+                <div class="form-group"
+                     ng-class=" { 'has-error' : passwordForm.password.$invalid && model.submitted } ">
+                    <input name="password"
+                           ng-model="model.password"
+                           class="form-control"
+                           placeholder="new password"
+                           type="password"
+                           required/>
+                    <span class="help-block"
+                          ng-show="passwordForm.password.$invalid && model.submitted">
+                        Please provide a password.</span>
+                </div>
+
+                <div class="form-group"
+                     ng-class=" { 'has-error' : (passwordForm.passwordAgain.$invalid || model.isPasswordMatched) && model.submitted} ">
+                    <input name="passwordAgain"
+                           ng-model="model.passwordAgain"
+                           class="form-control"
+                           placeholder="verify password"
+                           type="password"
+                           required/>
+                    <span class="help-block"
+                          ng-show="model.isPasswordMatched && model.submitted">
+                        Passwords do not match.</span>
+                </div>
+
+                <button type="submit" ng-click="model.updatePassword(passwordForm.$valid)"
+                        class="btn btn-primary btn-block">Update Password
+                </button>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="first">First Name</label> <!-- for must match the id bellow -->
-            <input ng-model="model.user.profile.firstName"
-                   type="text"
-                   class="form-control"
-                   id="first"/>
-        </div>
-
-        <div class="form-group">
-            <label for="last">Last Name</label> <!-- for must match the id bellow -->
-            <input ng-model="model.user.profile.lastName"
-                   type="text"
-                   class="form-control"
-                   id="last"/>
-        </div>
-
-        <div class="form-group">
-            <label for="gender">Gender</label> <!-- for must match the id bellow -->
-            <select id="gender"
-                    class="form-control"
-                    ng-model="model.user.profile.gender"
-                    ng-options="v for v in model.genderList">
-            </select>
-        </div>
-
-
-        <div class="form-gourp">
-            <label for="profileImage">Profile Image</label>
-            <input ng-model="model.user.profile.profileImage"
-                   type="url"
-                   class="form-control"
-                   id="profileImage"/>
-        </div>
-
-        <div class="form-gourp">
-            <label for="major">Major</label>
-            <input ng-model="model.user.profile.major"
-                   type="text"
-                   class="form-control"
-                   id="major"/>
-        </div>
-
-        <div class="form-gourp">
-            <label for="field">Field</label>
-            <input ng-model="model.user.profile.field"
-                   type="text"
-                   class="form-control"
-                   id="field"/>
-        </div>
-
-        <div class="form-gourp">
-            <label for="description">Description</label>
-            <textarea ng-model="model.user.profile.description"
-                      rows="5"
-                      class="form-control"
-                      id="description">
-            </textarea>
-        </div>
-
-        <!--pDF         : String-->
-
-
-        <a class="btn btn-primary btn-block"
-           href="#/user/jobs">My Jobs</a>
-
-        <a class="btn btn-danger btn-block"
-           ng-click="model.logOut()">Logout</a>
-
-        <a class="btn btn-danger btn-block"
-           ng-click="model.unregister()">Unregister</a>
     </form>
+
+    <form name="profileForm">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Profile</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="first">First Name</label> <!-- for must match the id bellow -->
+                    <input ng-model="model.user.profile.firstName"
+                           type="text"
+                           class="form-control"
+                           id="first"/>
+                </div>
+                <div class="form-group">
+                    <label for="last">Last Name</label> <!-- for must match the id bellow -->
+                    <input ng-model="model.user.profile.lastName"
+                           type="text"
+                           class="form-control"
+                           id="last"/>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label> <!-- for must match the id bellow -->
+                    <select id="gender"
+                            class="form-control"
+                            ng-model="model.user.profile.gender">
+                        <option value="MALE">Male</option>
+                        <option value="FEMALE">Female</option>
+                        <option value="NOT_SPECIFIED">Not Specified</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="major">Major</label> <!-- for must match the id bellow -->
+                    <select id="major"
+                            class="form-control"
+                            ng-model="model.user.profile.major">
+                        <option value="CS">Computer Science</option>
+                        <option value="BI">Biology</option>
+                        <option value="EE">Electrical Engineering</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="field">Career Field</label> <!-- for must match the id bellow -->
+                    <select id="field"
+                            class="form-control"
+                            ng-model="model.user.profile.field">
+                        <option value="WEB_DEV">Web Development</option>
+                        <option value="GRAPHICS_DESIGN">Graphics Design</option>
+                        <option value="BAKER">Baker</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="description">Career Summary</label> <!-- for must match the id bellow -->
+                    <textarea rows="5"
+                              class="form-control"
+                              id="description"
+                              ng-model="model.user.profile.description"
+                              placeholder="Add a short summary about you and your skills here.">{{model.user.profile.description}}</textarea>
+                </div>
+
+                <button type="submit" ng-click="model.updateProfile(profileForm.$valid)"
+                        class="btn btn-primary btn-block">Update Profile
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <!--pDF         : String-->
+
+
+    <a class="btn btn-primary btn-block"
+       href="#/user/jobs">My Jobs</a>
+
+    <a class="btn btn-danger btn-block"
+       ng-click="model.logOut()">Logout</a>
+
+    <a class="btn btn-danger btn-block"
+       ng-click="model.unregister()">Unregister</a>
 </div>

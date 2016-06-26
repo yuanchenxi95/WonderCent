@@ -55,10 +55,6 @@ p.navbar-text.pull-left {
     display: none;
 }
 
-.panel-heading {
-    height: 70px;
-}
-
 .no-blue-link {
     color: #3a3a3a;
 }
