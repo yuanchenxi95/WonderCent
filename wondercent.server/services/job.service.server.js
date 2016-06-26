@@ -12,6 +12,7 @@ module.exports = function (app, models) {
     app.delete("/api/job/delete/:jobId", authenticate, deleteJob);
     app.post("/api/job/update/deleteEmployeeUser", authenticate, deleteEmployeeUser);
     app.post("/api/job/update/deleteRequestedUser", authenticate, deleteRequestUser);
+    app.get("/api/job/search/:searchTerm", searchJob);
 
     function authenticate(req, res, next) {
         if (!req.isAuthenticated()) {
@@ -280,6 +281,22 @@ module.exports = function (app, models) {
 
         }
         res.status(401).send("Cannot find the job in your jobRoles: " + jobId);
+    }
+
+    function searchJob(req, res) {
+        var searchTerm = req.params.searchTerm;
+
+        jobModel
+            .searchJob(searchTerm)
+            .then(
+                function(jobs) {
+                    res.json(jobs);
+                },
+                function (error) {
+                    res.status(401).send(error);
+                }
+            )
+
     }
 };
 

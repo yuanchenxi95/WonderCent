@@ -17,7 +17,8 @@ module.exports = function() {
         findJobsByJobName: findJobsByJobName,
         findJobsByPriceRange: findJobsByPriceRange,
         updateJob: updateJob,
-        deleteJob: deleteJob
+        deleteJob: deleteJob,
+        searchJob: searchJob
     };
 
     return api;
@@ -50,6 +51,10 @@ module.exports = function() {
 
     function deleteJob(jobId) {
         return Job.remove({_id: jobId});
+    }
+
+    function searchJob(jobName) {
+        return Job.find({name: /jobName/});
     }
 
 
