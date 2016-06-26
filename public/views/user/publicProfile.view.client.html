@@ -1,0 +1,59 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Profile</h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label for="first">First Name</label> <!-- for must match the id bellow -->
+            <input ng-model="model.user.profile.firstName"
+                   type="text"
+                   class="form-control"
+                   id="first"/>
+        </div>
+        <div class="form-group">
+            <label for="last">Last Name</label> <!-- for must match the id bellow -->
+            <input ng-model="model.user.profile.lastName"
+                   type="text"
+                   class="form-control"
+                   id="last"/>
+        </div>
+        <div class="form-group">
+            <label for="gender">Gender</label> <!-- for must match the id bellow -->
+            <select id="gender"
+                    class="form-control"
+                    ng-model="model.user.profile.gender">
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+                <option value="NOT_SPECIFIED">Not Specified</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="major">Major</label> <!-- for must match the id bellow -->
+            <select id="major"
+                    class="form-control"
+                    ng-model="model.user.profile.major">
+                <option value="CS">Computer Science</option>
+                <option value="BI">Biology</option>
+                <option value="EE">Electrical Engineering</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field">Career Field</label> <!-- for must match the id bellow -->
+            <select id="field"
+                    class="form-control"
+                    ng-model="model.user.profile.field">
+                <option value="WEB_DEV">Web Development</option>
+                <option value="GRAPHICS_DESIGN">Graphics Design</option>
+                <option value="BAKER">Baker</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="description">Career Summary</label> <!-- for must match the id bellow -->
+                    <textarea rows="5"
+                              class="form-control"
+                              id="description"
+                              ng-model="model.user.profile.description"
+                              placeholder="Add a short summary about you and your skills here.">{{model.user.profile.description}}</textarea>
+        </div>
+    </div>
+</div>
