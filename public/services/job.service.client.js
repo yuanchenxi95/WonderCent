@@ -12,7 +12,7 @@
             findJobsByEmployeeId: findJobsByEmployeeId,
             findJobsByEmployerId: findJobsByEmployerId,
             findJobsByRequestedUserId: findJobsByRequestedUserId,
-            getJobById: getJobById,
+            findJobById: findJobById,
             createJob: createJob,
             updateJob: updateJob,
             deleteJob: deleteJob
@@ -50,7 +50,7 @@
             return $http.put(url, body);
         }
 
-        function getJobById(jobId) {
+        function findJobById(jobId) {
             var url = "/api/job/" + jobId;
 
             return $http.get(url);

@@ -20,7 +20,7 @@
 
             // load vm.currentJob
             JobService
-                .getJobById(vm.jobId)
+                .findJobById(vm.jobId)
                 .then(
                     function (response) {
                         vm.currentJob = response.data;
