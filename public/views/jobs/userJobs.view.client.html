@@ -43,7 +43,7 @@
     <h3>Jobs I created</h3>
     <ul class="list-group">
         <li ng-repeat="job in model.jobsAsEmployer" class="list-group-item">
-            <a href="#">{{job.name}}</a>
+            <a href="#/user/job/{{job._id}}">{{job.name}}</a>
             <a href="#/user/job/jobICreated/edit/{{job._id}}" class="pull-right">
                 <span class="glyphicon glyphicon-cog"></span>
             </a>
