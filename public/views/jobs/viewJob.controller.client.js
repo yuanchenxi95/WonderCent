@@ -10,23 +10,27 @@
         // vm.findJobsByEmployeeId = findJobsByEmployeeId;
         // vm.findJobsByEmployerId = findJobsByEmployerId;
         // vm.findJobsByRequestedUserId = findJobsByRequestedUserId;
-        vm.isThisJobMyJob = isThisJobMyJob;
+        vm.canRequestJob = canRequestJob;
         vm.applyForJob = applyForJob;
 
         // execute on load time.
         function init() {
             vm.user = $rootScope.currentUser;
 
-            if (user) {
+            if (vm.user) {
                 vm.loggedIn = true;
+                console.log(vm.user);
             } else {
                 vm.loggedIn = false;
             }
 
+            // Back button url:
             if ($routeParams["query"]) {
                 vm.backURL = "#search/" + $routeParams["query"];
-            } else {
+            } else if (vm.loggedIn) {
                 vm.backURL = "#user/jobs";
+            } else {
+                vm.backURL = "#/login"
             }
 
             JobService
@@ -35,15 +39,20 @@
                     function(response) {
                         vm.job = response.data;
                         console.log(vm.job);
+                        findUsersByRequestedUserID();
                     },
                     function(error) {
                         vm.success = null;
                         vm.error = error.data;
                     }
                 );
+        }
 
+        init();
+
+        function findUsersByRequestedUserID() {
             vm.applicants = [];
-            for (var i in job._requestedUsers) {
+            for (var i in vm.job._requestedUsers) {
                 UserService
                     .findUserById(job._requestedUsers[i])
                     .then(
@@ -55,78 +64,35 @@
                         }
                     )
             }
-
-            if (vm.user) {
-                findJobsByEmployeeId();
-                findJobsByEmployerId();
-                findJobsByRequestedUserId();
-            }
         }
 
-        init();
+        function canRequestJob() {
+            if (!vm.loggedIn) {
+                return true; // You can, but you need to log in first.
+            }
 
-        function isThisJobMyJob() {
-            for (var i in vm.jobsAsEmployer) {
-                if (vm.jobsAsEmployer[i]._id === vm.job._id) {
+            for (var i in vm.user.jobRoles) {
+                if (vm.user.jobRoles[i]._job === vm.job._id) {
                     return false;
                 }
             }
-            return false;
-        }
-
-        function findJobsByEmployeeId() {
-            JobService
-                .findJobsByEmployeeId(vm.user._id)
-                .then(
-                    function (response) {
-                        vm.jobsAsEmployee =  response.data;
-                    },
-                    function (error) {
-                        vm.error = error;
-                    }
-                );
-        }
-
-        function findJobsByEmployerId() {
-            JobService
-                .findJobsByEmployerId(vm.user._id)
-                .then(
-                    function (response) {
-                        vm.jobsAsEmployer =  response.data;
-                    },
-                    function (error) {
-                        vm.error = error;
-                    }
-                );
+            return true;
         }
 
         function applyForJob() {
-            if (vm.user) {
+            if (vm.loggedIn) {
                 JobService
-                    .applyJob(jobId)
+                    .applyJob(vm.job._id)
                     .then(
                         function(response) {
                             vm.hasApplied = true;
+                            vm.applicants.push(user);
                         },
                         function(error) {
-                            vm.erro = error.data;
+                            vm.error = error.data;
                         }
                     );
             }
         }
-
-        function findJobsByRequestedUserId() {
-            JobService
-                .findJobsByRequestedUserId(vm.user._id)
-                .then(
-                    function (response) {
-                        vm.jobsAsRequestedUser = response.data;
-                    },
-                    function (error) {
-                        vm.error = error;
-                    }
-                );
-        }
-
     }
 })();
