@@ -12,7 +12,9 @@
             findJobsByEmployeeId: findJobsByEmployeeId,
             findJobsByEmployerId: findJobsByEmployerId,
             findJobsByRequestedUserId: findJobsByRequestedUserId,
+            getJobById: getJobById,
             createJob: createJob,
+            updateJob: updateJob
         };
         return api;
 
@@ -43,7 +45,23 @@
             var url = "/api/job/apply";
             var body = {
                 jobId: jobId
-            }
+            };
+            return $http.put(url, body);
+        }
+
+        function getJobById(jobId) {
+            var url = "/api/job/" + jobId;
+
+            return $http.get(url);
+        }
+
+        function updateJob(job) {
+            var url = "/api/job/update";
+
+            var body = {
+                job: job
+            };
+
             return $http.put(url, body);
         }
 

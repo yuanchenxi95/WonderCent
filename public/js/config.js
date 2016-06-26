@@ -86,6 +86,14 @@
                     loggedIn: checkLoggedIn
                 }
             })
+            .when("/user/job/jobICreated/edit/:jobId", {
+                templateUrl: "views/jobs/editJob.view.client.html",
+                controller: "EditJobController",
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkLoggedIn
+                }
+            })
             .otherwise({
                 redirectTo: "/login"
             });

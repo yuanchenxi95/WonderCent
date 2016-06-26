@@ -16,6 +16,7 @@ module.exports = function (app, models) {
     app.get("/api/user/jobs/creatingJobs/:userId", authenticate, findCreatorJobForUser);
     app.get("/api/user/jobs/acceptorJobs/:userId", authenticate, findAcceptorJobsForUser);
     app.get("/api/user/jobs/pendingJobs/:userId", authenticate, findPendingJobsForUser);
+    app.get("/api/job/:jobId", getJobById);
 
     function authenticate(req, res, next) {
         if (!req.isAuthenticated()) {
@@ -27,20 +28,26 @@ module.exports = function (app, models) {
 
     function updateJob(req, res) {
         var jobFromClient = req.body.job;
+        var jobRoles = req.user.jobRoles;
 
-        // should get user from the database
-        for (var i in req.user.jobRoles) {
-            var jobRole = req.user.jobRoles[i];
+        for (var i in jobRoles) {
+            var jobRole = jobRoles[i];
 
-            if (jobRole._job === jobFromClient._id) {
+            var jobRoleJobId = jobRole._job;
+            if (jobRoleJobId.toString() === jobFromClient._id) {
 
-                if (jobRole.role === 'CREATOR'
-                    && req.user._id === jobFromClient._employerUser) {
+                if (jobRole.role.toString() === 'CREATOR') {
 
-                    jobModel.findJobById(jobFromClient._id)
+                    jobModel
+                        .findJobById(jobFromClient._id)
                         .then(
                             function (job) {
-                                return jobModel.updateJob(jobFromClient._id, jobFromClient);
+                                if (job._employerUser.toString() === req.user._id.toString()) {
+                                    return jobModel.updateJob(jobFromClient._id, jobFromClient);
+                                } else {
+                                    // if the employeeUser is not the request user
+                                    return jobModel.findJobById(job._id);
+                                }
                             },
                             function (error) {
                                 return error;
@@ -75,6 +82,7 @@ module.exports = function (app, models) {
         var newJob = req.body.job;
 
         newJob._employerUser = req.user._id;
+
 
         jobModel
             .createJob(newJob)
@@ -349,6 +357,22 @@ module.exports = function (app, models) {
                 },
                 function (error) {
                     res.status(404).send("Unable to find jobs");
+                }
+            )
+
+    }
+
+    function getJobById(req, res) {
+        var jobId = req.params.jobId;
+
+        jobModel
+            .findJobById(jobId)
+            .then(
+                function (job) {
+                    res.json(job);
+                },
+                function (error) {
+                    res.status(404).send("Unable to find the job: " + jobId);
                 }
             )
 

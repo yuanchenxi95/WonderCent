@@ -60,7 +60,6 @@
         }
 
         function updateProfile() {
-            console.log(vm.user.profile);
             ProfileService
                 .updateProfile(id, vm.user.profile)
                 .then(

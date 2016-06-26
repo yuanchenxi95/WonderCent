@@ -4,46 +4,54 @@
 (function () {
     angular
         .module("WonderCentApp")
-        .controller("NewJobController", NewJobController);
+        .controller("EditJobController", EditJobController);
 
     // View model design pattern
-    function NewJobController($location, $rootScope, JobService) {
+    function EditJobController($location, $rootScope, JobService, $routeParams) {
         vm = this;
 
-        vm.createJob = createJob;
+        vm.jobId = $routeParams.jobId;
+        vm.updateJob = updateJob;
         vm.deleteJob = deleteJob;
 
         function init() {
             var user = $rootScope.user;
+
+
+            // load vm.currentJob
+            JobService
+                .getJobById(vm.jobId)
+                .then(
+                    function (response) {
+                        vm.currentJob = response.data;
+                    },
+                    function (error) {
+                        vm.error = error;
+                    }
+                );
         }
 
 
         init();
 
-        function createJob() {
+        function updateJob() {
 
             delete vm.error;
             delete vm.success;
 
 
-            if (vm.newJob.name === "" || vm.newJob.name === null || !vm.newJob.name) {
+            if (vm.currentJob.name === "" || vm.currentJob.name === null || !vm.currentJob.name) {
                 vm.error = "name cannot be empty";
             } else {
 
 
-                var newJob = {
-                    price: vm.newJob.price,
-                    name: vm.newJob.name,
-                    description: vm.newJob.description,
-                };
 
 
                 JobService
-                    .createJob(newJob)
+                    .updateJob(vm.currentJob)
                     .then(
                         function (response) {
                             vm.success = "creation succeeded";
-
                             goBackToJobList();
                         },
                         function (error) {

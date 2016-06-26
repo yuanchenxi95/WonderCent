@@ -44,7 +44,7 @@
     <ul class="list-group">
         <li ng-repeat="job in model.jobsAsEmployer" class="list-group-item">
             <a href="#">{{job.name}}</a>
-            <a href="#" class="pull-right">
+            <a href="#/user/job/jobICreated/edit/{{job._id}}" class="pull-right">
                 <span class="glyphicon glyphicon-cog"></span>
             </a>
         </li>
@@ -54,9 +54,6 @@
     <ul class="list-group">
         <li ng-repeat="job in model.jobsAsEmployee" class="list-group-item">
             <a href="#">{{job.name}}</a>
-            <a href="#" class="pull-right">
-                <span class="glyphicon glyphicon-cog"></span>
-            </a>
         </li>
     </ul>
 
@@ -64,9 +61,6 @@
     <ul class="list-group">
         <li ng-repeat="job in model.jobsAsRequestedUser" class="list-group-item">
             <a href="#">{{job.name}}</a>
-            <a href="#" class="pull-right">
-                <span class="glyphicon glyphicon-cog"></span>
-            </a>
         </li>
     </ul>
 

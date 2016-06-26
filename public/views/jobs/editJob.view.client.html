@@ -1,5 +1,3 @@
-
-
 <!--header-->
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -10,9 +8,9 @@
             </a>
         </p>
         <a class="navbar-brand">
-            New job
+            Edit job
         </a>
-        </div>
+    </div>
     </div>
 </nav>
 
@@ -42,12 +40,12 @@
 
     <form>
         <div class="form-group">
-            <label for="newJobName">Name</label>
+            <label for="currentJobName">Name</label>
             <input type="text"
                    name="name"
-                   ng-model="model.newJob.name"
+                   ng-model="model.currentJob.name"
                    class="form-control"
-                   id="newJobName"
+                   id="currentJobName"
                    placeholder="Name"
                    required/>
         </div>
@@ -55,7 +53,7 @@
             <label for="price">Price</label>
             <input type="number"
                    name="price"
-                   ng-model="model.newJob.price"
+                   ng-model="model.currentJob.price"
                    id="price"
                    class="form-control"
                    placeholder="The price of the new Job"/>
@@ -63,15 +61,15 @@
         <div class="form-group">
             <label for="description">Description</label>
             <textarea rows="5"
-                      ng-model="model.newJob.description"
+                      ng-model="model.currentJob.description"
                       name="description"
                       id="description"
                       class="form-control"
                       placeholder="Description"></textarea>
         </div>
 
-        <button type="submit" ng-click="model.createJob()"
-                class="btn btn-primary btn-block">Create
+        <button type="submit" ng-click="model.updateJob()"
+                class="btn btn-primary btn-block">Update
         </button>
 
         <a class="btn btn-danger btn-block"
