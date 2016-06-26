@@ -47,7 +47,7 @@ module.exports = function (app, models) {
 
                 },
                 function (error) {
-                    res.status(400).send("Email " + user.email + " not found");
+                    res.status(400).send("UserId " + userId + " not found");
                 }
             );
     }
