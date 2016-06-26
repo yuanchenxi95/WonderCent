@@ -103,6 +103,11 @@
                 }
             })
             .when("/search/:query", {
+                templateUrl: "views/search/searchResult.view.client.html",
+                controller: "SearchResultController",
+                controllerAs: "model"
+            })
+            .when("/search", {
                 templateUrl: "views/search/search.view.client.html",
                 controller: "SearchController",
                 controllerAs: "model"
