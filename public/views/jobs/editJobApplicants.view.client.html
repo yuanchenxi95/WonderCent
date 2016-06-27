@@ -58,13 +58,11 @@
 
     <div ng-show="model.applicants.length != 0">
         <h3>Applicants who applied this job</h3>
-        {{model.applicants}}
         <ul class="list-group">
             <li ng-repeat="applicant in model.applicants" class="list-group-item">
                 <a href="#/public/profile/{{applicant._userId}}">
                     {{applicant.firstName}} {{applicant.lastName}}
                 </a>
-                {{applicant._userId}}
                 <button ng-show="!model.employee"
                    ng-click="model.chooseThisCandidate(applicant._userId)"
                    class="pull-right">
