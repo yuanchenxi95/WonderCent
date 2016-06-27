@@ -8,6 +8,30 @@ body {
     padding-bottom: 60px;
 }
 
+div.banner {
+    position: absolute;
+    background-image: linear-gradient(
+            rgba(35, 71, 99, 0.85),
+            rgba(35, 71, 99, 0.85)
+    ), url("../bannerimage.jpg");
+    background-size: 100% auto;
+    height: 100vh;
+    width: 100%;
+    top: calc((100% - 100vh) / 2);
+}
+
+.banner-text {
+    margin-top: 200px;
+    color: white;
+    font-size: 60px;
+    font-weight: 500;
+}
+
+.banner-paragraph {
+    color: #c3dbd8;
+    font-size: 30px;
+    font-weight: 100;
+}
 
 input {
     margin-bottom: 5px;

@@ -19,6 +19,22 @@
         // execute on load time.
         function init() {
             vm.user = $rootScope.currentUser;
+
+            vm.followingUsers = [];
+            if (vm.user) {
+                for (var i in user._followingUsers) {
+                    ProfileService
+                        .findProfileById(user._followingUsers[i])
+                        .then(
+                            function (profile) {
+                                vm.followingUsers.push(profile);
+                            },
+                            function (error) {
+                                vm.error = error.data;
+                            }
+                        );
+                }
+            }
         }
 
         init();

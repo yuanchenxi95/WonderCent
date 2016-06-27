@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<div ng-show="model.user">
+
+
+    <!--header-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-inner">
+                <p class="navbar-text pull-left">
+                    <a href="#/user/jobs" class="navbar-link">
+                      <span class="glyphicon glyphicon-chevron-left">
+                      </span>
+                    </a>
+                </p>
+                <a class="navbar-brand">
+                    WonderCent
+                </a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div ng-show="!model.user">
+    <!--header-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-inner">
+                <a class="navbar-brand">
+                    WonderCent
+                </a>
+            </div>
+            <p class="navbar-text pull-right">
+                <a href="#/login" class="navbar-link">
+                    Login
+                </a>
+            </p>
+            <p class="navbar-text pull-right">
+                <a href="#/register" class="navbar-link">
+                    Register
+                </a>
+            </p>
+        </div>
+    </nav>
+</div>
+
+<link rel="stylesheet" type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+
+<div class="banner">
+    <div class="container">
+        <div class="row">
+            <h1 class="banner-text text-center">WonderCent</h1>
+            <br />
+            <br />
+            <div class="col-xs-1 col-sm-3">
+            </div>
+            <div class="col-xs-10 col-sm-6">
+                <p class="banner-paragraph text-center">Over a million user-created jobs of all types to provide all the work experiences, money, and memories you can think of.</p>
+                <br />
+                <br />
+            <a class="btn btn-default btn-block btn-lg"
+               href="#/login" >
+                Get Started
+            </a>
+            </div>
+            <div class="col-xs-1 col-sm-3">
+            </div>
+        </div>
+    </div>
+</div>
