@@ -20,11 +20,11 @@
         function init() {
             vm.user = $rootScope.currentUser;
 
-            vm.followingUsers = [];
+            vm.followingUsers = [{a:1},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2}];
             if (vm.user) {
-                for (var i in user._followingUsers) {
+                for (var i in vm.user._followingUsers) {
                     ProfileService
-                        .findProfileById(user._followingUsers[i])
+                        .findProfileById(vm.user._followingUsers[i])
                         .then(
                             function (profile) {
                                 vm.followingUsers.push(profile);
