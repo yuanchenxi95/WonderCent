@@ -20,14 +20,12 @@ module.exports = function () {
     var userModel = require('./user/user.model.server')();
     var profileModel = require('./profile/profile.model.server')(userModel);
     var jobRoleModel = require('./jobRole/jobRole.model.server')(userModel);
-    var adminModel = require('./admin/admin.model.server')();
 
     var models = {
         profileModel: profileModel,
         jobRoleModel: jobRoleModel,
         jobModel: jobModel,
         userModel: userModel,
-        adminModel: adminModel
     };
 
     return models;

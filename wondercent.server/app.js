@@ -14,7 +14,6 @@ module.exports = function(app) {
     var userService = require("./services/user.service.server.js")(app, model);
     var profileService = require("./services/profile.service.server.js")(app, model);
     var jobService = require("./services/job.service.server.js")(app, model);
-    var adminService = require("./services/admin.service.server.js")(app, model);
 
     // test
   // app.get("/test/:message", function (req, res) {
