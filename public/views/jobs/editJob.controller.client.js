@@ -13,6 +13,7 @@
         vm.jobId = $routeParams.jobId;
         vm.updateJob = updateJob;
         vm.deleteJob = deleteJob;
+        vm.goToViewApplicants = goToViewApplicants;
 
         function init() {
             var user = $rootScope.user;
@@ -44,14 +45,11 @@
                 vm.error = "name cannot be empty";
             } else {
 
-
-
-
                 JobService
                     .updateJob(vm.currentJob)
                     .then(
                         function (response) {
-                            vm.success = "creation succeeded";
+                            vm.success = "update succeeded";
                             goBackToJobList();
                         },
                         function (error) {
@@ -75,6 +73,11 @@
                     }
                 )
 
+        }
+
+        function goToViewApplicants() {
+            console.log("hi");
+            $location.url("/user/job/jobICreated/edit/" + vm.jobId + "/editApplicants");
         }
 
         function goBackToJobList() {

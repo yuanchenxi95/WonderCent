@@ -20,6 +20,7 @@ module.exports = function(userModel) {
         return User
             .findOne({_id: userId})
             .then(function(user) {
+                profile._userId = user._id;
                 user.profile = profile;
                 return user.save();
             });
