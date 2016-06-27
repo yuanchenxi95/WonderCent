@@ -92,6 +92,7 @@
                         function(response) {
                             vm.hasApplied = true;
                             vm.applicants.push(vm.user);
+                            vm.canRequest = false;
                         },
                         function(error) {
                             vm.error = error.data;
