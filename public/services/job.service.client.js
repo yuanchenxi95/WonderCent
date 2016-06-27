@@ -17,7 +17,8 @@
             createJob: createJob,
             updateJob: updateJob,
             deleteJob: deleteJob,
-            searchJob: searchJob
+            searchJob: searchJob,
+            chooseCandidate: chooseCandidate
         };
         return api;
 
@@ -76,6 +77,17 @@
         function searchJob(searchTerm) {
             var url = "/api/job/search/" + searchTerm;
             return $http.get(url);
+        }
+
+        function chooseCandidate(jobId, candidateId) {
+            var url = "/api/job/chooseCandidate";
+            var body = {
+                jobId: jobId,
+                candidateId: candidateId
+            };
+
+            return $http.put(url, body);
+
         }
     }
 })();

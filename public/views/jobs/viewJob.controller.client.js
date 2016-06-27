@@ -17,7 +17,6 @@
 
             if (vm.user) {
                 vm.loggedIn = true;
-                console.log(vm.user);
             } else {
                 vm.loggedIn = false;
             }
@@ -36,7 +35,6 @@
                 .then(
                     function(response) {
                         vm.job = response.data;
-                        console.log(vm.job);
                         findUsersByRequestedUserID();
                         vm.canRequest = canRequestJob();
                     },
@@ -60,7 +58,6 @@
                                 profile: profile.data,
                                 _userId: vm.job._requestedUsers[i]
                             });
-                            console.log(vm.applicants);
                         },
                         function(error) {
                             vm.error = error.data;
@@ -71,8 +68,7 @@
 
         function canRequestJob() {
             if (!vm.loggedIn) {
-                console.log(vm);
-                return true; // You can, but you need to log in first.
+                return false; // You can, but you need to log in first.
             }
 
             for (var i in vm.user.jobRoles) {
@@ -80,6 +76,11 @@
                     return false;
                 }
             }
+
+            if (vm.job._employeeUser) {
+                return false;
+            }
+            
             return true;
         }
 

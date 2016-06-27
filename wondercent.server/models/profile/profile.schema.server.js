@@ -11,7 +11,8 @@ module.exports = function () {
         major       : String,
         field       : String,
         description : String,
-        pDF         : String
+        pDF         : String,
+        _userId     : {type: mongoose.Schema.Types.ObjectId, ref: "User"}
     });
     return ProfileSchema;
 };

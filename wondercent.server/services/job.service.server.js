@@ -17,6 +17,7 @@ module.exports = function (app, models) {
     app.get("/api/user/jobs/acceptorJobs/:userId", authenticate, findAcceptorJobsForUser);
     app.get("/api/user/jobs/pendingJobs/:userId", authenticate, findPendingJobsForUser);
     app.get("/api/job/:jobId", getJobById);
+    app.put("/api/job/chooseCandidate", authenticate, chooseCandidate);
 
     function authenticate(req, res, next) {
         if (!req.isAuthenticated()) {
@@ -119,13 +120,15 @@ module.exports = function (app, models) {
         jobModel
             .findJobById(jobId)
             .then(
-                function (job) {
-                    if (job._employerUser.toString() === jobId) {
+                function (jobComingBack) {
+                    var job = JSON.parse(JSON.stringify(jobComingBack));
+                    if (job._employerUser.toString() === userId.toString()) {
                         res.status(401).send("Employer cannot apply for this job");
-                        return;
+                    } else if (job._employeeUser) {
+                        res.status(401).send("Already has an employee");
                     } else {
                         for (var i in job._requestedUsers) {
-                            if (job._requestedUsers[i] === userId) {
+                            if (job._requestedUsers[i] === userId.toString()) {
                                 res.status(401).send("Already applied for this job: " + jobId);
                                 return;
                             }
@@ -376,6 +379,81 @@ module.exports = function (app, models) {
                     res.status(404).send("Unable to find the job: " + jobId);
                 }
             )
+
+    }
+
+    function chooseCandidate(req, res) {
+        var jobId = req.body.jobId;
+        var candidateId = req.body.candidateId;
+        var user = req.user;
+        var userId = user._id;
+        
+
+        jobModel
+            .findJobById(jobId)
+            .then(
+                function (job) {
+                    var jobComingBack = JSON.parse(JSON.stringify(job));
+
+                    if (jobComingBack._employeeUser != undefined) {
+                        res.status(401).send("Employee has already been choose");
+                    } else if (jobComingBack._employerUser === userId.toString()) {
+                        for (var i in jobComingBack._requestedUsers) {
+                            if (jobComingBack._requestedUsers[i].toString() == candidateId) {
+                                jobComingBack._requestedUsers.splice(i, 1);
+                                jobComingBack._employeeUser = candidateId;
+
+                                return jobModel.updateJob(jobId, jobComingBack);
+                            }
+                        }
+                        res.status(401).send("The candidate you wanna choose is not in the list");
+
+                    } else {
+                        res.status(401).send("You don't have authorization to choose candidate");
+                    }
+                },
+                function(error) {
+                    return error;
+                }
+            )
+            .then(
+                function (job) {
+                    return userModel
+                        .findUserById(candidateId);
+                },
+                function (error) {
+                    return error;
+                }
+            )
+            .then(
+                function (cand) {
+                    var candid = JSON.parse(JSON.stringify(cand));
+                    var jobRoles = candid.jobRoles;
+
+
+                    for (var i in jobRoles) {
+                        if (jobRoles[i]._job.toString() == jobId) {
+                            var newJobRole = jobRoles[i];
+                            newJobRole.role = 'ACCEPTOR';
+                            return jobRoleModel.updateJobRole(jobRoles[i]._id, newJobRole, candid._id);
+                        }
+                    }
+
+                    res.status(401).send("Cannot find the JobRole of the Candidate: " + candid._id);
+                },
+                function (error) {
+                    return error;
+                }
+            )
+            .then(
+                function (user) {
+                    res.sendStatus(200);
+                },
+                function (error) {
+                    res.status(401).send(error);
+                }
+            )
+
 
     }
 

@@ -127,6 +127,14 @@
                     loggedIn: checkLoggedIn
                 }
             })
+            .when("/user/job/jobICreated/edit/:jobId/editApplicants", {
+                templateUrl: "views/jobs/editJobApplicants.view.client.html",
+                controller: "EditJobApplicantsController",
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkLoggedIn
+                }
+            })
             .when("/user/job/:jobId", {
                 templateUrl: "views/jobs/viewJob.view.client.html",
                 controller: "ViewJobController",

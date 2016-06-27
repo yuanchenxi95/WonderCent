@@ -1,0 +1,78 @@
+<!--header-->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <p class="navbar-text pull-left">
+            <a ng-click="model.goBackToJobEdit()" class="navbar-link">
+                      <span class="glyphicon glyphicon-chevron-left">
+                      </span>
+            </a>
+        </p>
+        <a class="navbar-brand">
+            Edit Job Applicants
+        </a>
+    </div>
+    </div>
+</nav>
+
+<!--footer-->
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <p class="navbar-text pull-right">
+                <a href="#/user" class="navbar-link">
+                      <span class="glyphicon glyphicon-user">
+                      </span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div ng-show="model.success" class="alert alert-success">
+        {{model.success}}
+    </div>
+
+    <div ng-show="model.error" class="alert alert-danger">
+        {{model.error}}
+    </div>
+
+    <div ng-show="!model.employee">
+        <h3>This job's employee has not been decided yet</h3>
+    </div>
+
+    <div ng-show="model.employee">
+        <h3>The employee you hired</h3>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a href="#">{{model.employee.profile.firstName}} {{model.employee.profile.lastName}}</a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div ng-show="model.applicants.length == 0">
+        <h3>No one in the candidates list</h3>
+    </div>
+
+    <div ng-show="model.applicants.length != 0">
+        <h3>Applicants who applied this job</h3>
+        {{model.applicants}}
+        <ul class="list-group">
+            <li ng-repeat="applicant in model.applicants" class="list-group-item">
+                <a href="#/public/profile/{{applicant._userId}}">
+                    {{applicant.firstName}} {{applicant.lastName}}
+                </a>
+                {{applicant._userId}}
+                <button ng-show="!model.employee"
+                   ng-click="model.chooseThisCandidate(applicant._userId)"
+                   class="pull-right">
+                    <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
