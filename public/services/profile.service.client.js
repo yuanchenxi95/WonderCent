@@ -11,7 +11,8 @@
         var api = {
             findProfileByEmail    : findProfileByEmail,
             findProfileById       : findProfileById,
-            updateProfile         : updateProfile
+            updateProfile         : updateProfile,
+            findProfileByKeyWord  : findProfileByKeyWord
         };
         return api;
 
@@ -33,5 +34,11 @@
             console.log(newProfile);
             return $http.put(url, body); // returns a promise
         }
+
+        function findProfileByKeyWord(keyword) {
+            var url = "/api/user/profile/search/" + keyword;
+            return $http.get(url);
+        }
+
     }
 })();

@@ -9,7 +9,8 @@ module.exports = function(userModel) {
 
     var api = {
         updateProfile: updateProfile,
-        deleteProfile: deleteProfile
+        deleteProfile: deleteProfile,
+        findProfileByKeyword: findProfileByKeyword
     };
 
     return api;
@@ -31,6 +32,20 @@ module.exports = function(userModel) {
                 user.profile = null;
                 return user.save();
             });
+    }
+
+    function findProfileByKeyword(keyword) {
+        return User
+            .find({
+                $or :
+                    [
+                        {"profile.firstName": new RegExp(keyword, 'i')},
+                        {"profile.lastName": new RegExp(keyword, 'i')},
+                        {"profile.major": new RegExp(keyword, 'i')},
+                        {"profile.field": new RegExp(keyword, 'i')},
+                        {"profile.description": new RegExp(keyword, 'i')}]
+                })
+            .select("_id profile");
     }
 
 };

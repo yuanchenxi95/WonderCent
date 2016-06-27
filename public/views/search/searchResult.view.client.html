@@ -52,7 +52,7 @@
 </div>
 
 <div class="container">
-    <h2>Search Jobs</h2>
+    <h2>Here is what we found for "{{model.previousSearch}}"</h2>
     <!--{{model.searchTerm}}-->
     <!--<br>-->
     <!--{{model.jobs}}-->
@@ -74,12 +74,23 @@
 
 
     <br>
-    <div>
-        We found {{model.jobs.length}} jobs for you
+    <div ng-show="model.jobs.length > 0">
+        <h4>We found {{model.jobs.length}} job(s):</h4>
         <ul class="list-group">
             <li ng-repeat="job in model.jobs" class="list-group-item">
                 <a href="#/search/{{model.searchTerm}}/job/{{job._id}}">{{job.name}}</a>
             </li>
         </ul>
+    </div>
+    <div ng-show="model.profiles.length > 0">
+        <h4>We found {{model.profiles.length}} user profile(s):</h4>
+        <ul class="list-group">
+            <li ng-repeat="profile in model.profiles" class="list-group-item">
+                <a href="#/public/profile/{{profile._id}}">{{profile.profile.firstName}} {{profile.profile.lastName}}</a>
+            </li>
+        </ul>
+    </div>
+    <div ng-show="model.profiles.length <= 0 && model.jobs.length <= 0">
+        <h4 class="text-muted">Sorry, no jobs or users found!</h4>
     </div>
 </div>

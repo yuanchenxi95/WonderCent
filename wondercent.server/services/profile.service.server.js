@@ -8,7 +8,7 @@ module.exports = function (app, models) {
     // app.get("/api/user/profile", authenticate, getUserProfile);
     app.put("/api/user/profile", authenticate, updateUserProfile);
     app.get("/api/user/profile/:userId", findUserProfileById);
-
+    app.get("/api/user/profile/search/:searchTerm", findUserProfileByKeyword);
 
     function authenticate(req, res, next) {
         if (!req.isAuthenticated()) {
@@ -46,6 +46,20 @@ module.exports = function (app, models) {
                 },
                 function (error) {
                     res.status(400).send("UserId " + userId + " not found");
+                }
+            );
+    }
+
+    function findUserProfileByKeyword(req, res) {
+        var keyword = req.params.searchTerm;
+        profileModel
+            .findProfileByKeyword(keyword)
+            .then(
+                function(profiles) {
+                    res.json(profiles);
+                },
+                function(error) {
+                    res.status(401).send("Could not find profiles by keyword! Error: " + error);
                 }
             );
     }
