@@ -20,7 +20,7 @@
         function init() {
             vm.user = $rootScope.currentUser;
 
-            vm.followingUsers = [{a:1},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2},{a:2}];
+            vm.followingUsers = [];
             if (vm.user) {
                 for (var i in vm.user._followingUsers) {
                     ProfileService
