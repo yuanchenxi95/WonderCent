@@ -70,12 +70,12 @@
                 controllerAs: "model"
             })
             .when("/", {
-                templateUrl: "views/user/login.view.client.html",
+                templateUrl: "views/landing/index.view.client.html",
                 controller: "LoginController",
                 controllerAs: "model"
             })
             .when("default", { // TODO Check it
-                templateUrl: "views/user/login.view.client.html",
+                templateUrl: "views/landing/index.view.client.html",
                 controller: "LoginController",
                 controllerAs: "model"
             })
@@ -165,7 +165,7 @@
                 controllerAs: "model"
             })
             .otherwise({
-                redirectTo: "/login"
+                redirectTo: "views/landing/index.view.client.html"
             });
     }
 })();
