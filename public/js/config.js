@@ -165,7 +165,7 @@
                 controllerAs: "model"
             })
             .otherwise({
-                redirectTo: "views/landing/index.view.client.html"
+                redirectTo: "/"
             });
     }
 })();

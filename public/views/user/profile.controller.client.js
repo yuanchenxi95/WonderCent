@@ -26,8 +26,8 @@
                     ProfileService
                         .findProfileById(vm.user._followingUsers[i])
                         .then(
-                            function (profile) {
-                                vm.followingUsers.push(profile);
+                            function (response) {
+                                vm.followingUsers.push(response.data);
                             },
                             function (error) {
                                 vm.error = error.data;
