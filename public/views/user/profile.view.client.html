@@ -140,8 +140,18 @@
         </div>
     </form>
 
-    <!--pDF         : String-->
-
+    <div>
+        <h3>Following</h3>
+        <div class="row">
+            <div class="col-xs-3" ng-repeat="following in model.followingUsers">
+                <a href="#/public/profile/{{following._userId}}">
+                    <img src="http://lorempixel.com/75/75/people"
+                         class="thumbnail img-responsive center-block"/>
+                </a>
+                {{following}}
+            </div>
+        </div>
+    </div>
 
     <a class="btn btn-primary btn-block"
        href="#/user/jobs">My Jobs</a>
