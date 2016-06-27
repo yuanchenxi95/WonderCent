@@ -16,6 +16,7 @@ div.banner {
     ), url("../bannerimage.jpg");
     background-size: 100% auto;
     height: 100vh;
+    min-height: 655px;
     width: 100%;
     top: calc((100% - 100vh) / 2);
 }
