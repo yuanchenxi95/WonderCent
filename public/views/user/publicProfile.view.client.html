@@ -4,14 +4,22 @@
         <div class="container-fluid">
             <div class="navbar-inner">
                 <!--<p class="navbar-text pull-left">-->
-                    <!--<a href="#/user/jobs" class="navbar-link">-->
-                      <!--<span class="glyphicon glyphicon-chevron-left">-->
-                      <!--</span>-->
-                    <!--</a>-->
+                <!--<a href="#/user/jobs" class="navbar-link">-->
+                <!--<span class="glyphicon glyphicon-chevron-left">-->
+                <!--</span>-->
+                <!--</a>-->
                 <!--</p>-->
                 <a class="navbar-brand">
                     Public Profile Page
                 </a>
+                <p
+                   class="navbar-text pull-right">
+                    <button class="navbar-link"
+                            ng-click="model.follow()"
+                            href="#/search">
+                        Follow
+                    </button>
+                </p>
             </div>
         </div>
     </nav>

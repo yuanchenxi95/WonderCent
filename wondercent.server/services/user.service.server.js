@@ -20,7 +20,7 @@ module.exports = function (app, models) {
     app.post("/api/logout", authenticate, logout);
     // app.put("/api/user/email", authenticate, updateUserEmail);
     app.put("/api/user/password", authenticate, updateUserPassword);
-    app.put("/api/user/following", authenticate, addFollowingUser);
+    app.put("/api/user/follow", authenticate, addFollowingUser);
     app.delete("/api/user", authenticate, deleteUser);
 
 
@@ -212,10 +212,31 @@ module.exports = function (app, models) {
     function addFollowingUser(req, res) {
         var user = req.user;
         var userId = user._id;
-        var addingId = req.body;
+        var addingId = req.body.addingId;
+
+        if(userId.toString() == addingId) {
+            res.status(404).send("Unable to follow the user");
+        }
+
 
         userModel
-            .addFollowingUser(userId, addingId)
+            .findUserById(userId)
+            .then(
+                function(user) {
+                    for(var i in user._followingUsers) {
+                        if (user._followingUsers[i].toString() === addingId) {
+                            res.status(401).send("Already followed user: " + addingId);
+                            return;
+                        }
+                    }
+
+                    return userModel.addFollowingUser(userId, addingId)
+
+                },
+                function (error) {
+                    return error;
+                }
+            )
             .then(
                 function (status) {
                     res.sendStatus(200);

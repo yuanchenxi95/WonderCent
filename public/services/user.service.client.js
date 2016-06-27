@@ -14,7 +14,7 @@
             findUserByUsername    : findUserByUsername,
             findUserByCredentials : findUserByCredentials,
             updateUserPassword    : updateUserPassword,
-            updateUserFollowing   : updateUserFollowing,
+            addFollowingUser   : addFollowingUser,
             login                 : login,
             register              : register,
             logOut                : logOut,
@@ -69,12 +69,17 @@
             var url = "/api/user/password";
             var body = {
                 password: newPassword
-            }
+            };
             return $http.put(url, body);
         }
 
-        function updateUserFollowing(userId, newFollow) {
+        function addFollowingUser(newFollowId) {
+            var url = "/api/user/follow";
+            var body = {
+                addingId: newFollowId
+            };
 
+            return $http.put(url, body);
         }
 
         /**
