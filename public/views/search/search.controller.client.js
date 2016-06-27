@@ -20,7 +20,9 @@
         vm.searchJob = searchJob;
 
         function searchJob() {
-            $location.url("/search/" + vm.searchTerm);
+            if (vm.searchTerm != undefined) {
+                $location.url("/search/" + vm.searchTerm);
+            }
         }
 
     }
